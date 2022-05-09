@@ -1,0 +1,9 @@
+language: java jdk:
+  - openjdk17
+install:
+  - mvn clean install -DskipTests
+script:
+  - mvn test
+  - cd moteur
+  - mvn exec:java & - cd ../joueur
+  - mvn exec:java
