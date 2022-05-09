@@ -1,9 +1,31 @@
-language: java jdk:
+language: java
+
+jdk:
   - openjdk17
+  
+env:
+  - NB_JOUEURS=3
+
+cache:
+  directories:
+    - $HOME/.m2
+
+services:
+  - docker
+
 install:
   - mvn clean install -DskipTests
+
 script:
+  - docker version
+  - echo "nb joueurs = $NB_JOUEURS "
   - mvn test
+  - docker build joueur -t scrabble:joueur
   - cd moteur
-  - mvn exec:java & - cd ../joueur
+  - docker run -d --name joueur_test -e PORT="8081" -e LANCEMENT="POUR_LES_TEST" -p 8081:8081 scrabble:joueur
+  - mvn failsafe:integration-test -Dit.test=prg.exemple.demoscrabble.MoteurWebControleurITCase#demanderAuJoueurDeJoueurTest
+  - docker start joueur_test
+  - mvn failsafe:integration-test -Dit.test=prg.exemple.demoscrabble.MoteurWebControleurITCase#demanderAuJoueurDeJoueurTest2foisDeSuite
+  - mvn exec:java -Dexec.args="closingAtTheEnd" &
+  - cd ../joueur
   - mvn exec:java
