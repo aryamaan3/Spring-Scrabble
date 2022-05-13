@@ -17,8 +17,8 @@ Idéalement, créez une branche pour chaque Issue sur votre fork local.
 Pour cela, nous vérifions d'abord la branche principale, puis nous en créons une nouvelle.
 
 ```bash 
-git checkout main
-git pull origin main
+git checkout scrabble.scrabble
+git pull origin scrabble.scrabble
 git checkout -b <ID Issue>
 ```
 

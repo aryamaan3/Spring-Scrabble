@@ -1,7 +1,7 @@
 # scrabble-td2-darpa_g
 scrabble-td2-darpa_g created by GitHub Classroom
 
-# Partie
+# partie.partie
 
 Grille (matrice)
 
@@ -23,7 +23,7 @@ incrireUnMotDansLaGrille()
 
 distributionLettre()
 
-# Joueur
+# joueur.joueur
 
 nom
 
@@ -50,3 +50,5 @@ listeMotsValides
 trouveMotAvecLettre()
 
 # Appareillement
+
+Gestions des tours dans partie ou appariement?

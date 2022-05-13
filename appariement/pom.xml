@@ -2,6 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <dependencies>
+        <dependency>
+            <groupId>scrabble-td2-darpa_g</groupId>
+            <artifactId>partie</artifactId>
+            <version>1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>scrabble-td2-darpa_g</groupId>
+            <artifactId>joueur</artifactId>
+            <version>1</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
     <parent>
         <groupId>scrabble-td2-darpa_g</groupId>
         <artifactId>scrabble</artifactId>
@@ -13,11 +27,22 @@
     <artifactId>appariement</artifactId>
     <version>1</version>
 
-    <packaging>pom</packaging>
-
     <properties>
         <java.version>17</java.version>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <mainClass>appariement.Appariement</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 
 

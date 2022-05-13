@@ -4,7 +4,7 @@ jdk:
   - openjdk17
   
 env:
-  - NB_JOUEURS=3
+  #- NB_JOUEURS=3
 
 cache:
   directories:
@@ -17,9 +17,9 @@ install:
   - mvn clean install -DskipTests
 
 script:
-  - docker version
-  - echo "nb joueurs = $NB_JOUEURS "
-  - mvn test
+  #- docker version
+  #- echo "nb joueurs = $NB_JOUEURS "
+  #- mvn test
   #- docker build joueur -t scrabble:joueur
   #- cd moteur
   #- docker run -d --name joueur_test -e PORT="8081" -e LANCEMENT="POUR_LES_TEST" -p 8081:8081 scrabble:joueur
@@ -29,3 +29,5 @@ script:
   #- mvn exec:java -Dexec.args="closingAtTheEnd" &
   #- cd ../joueur
   #- mvn exec:java
+  - cd appariement
+  - mvn exec:java
