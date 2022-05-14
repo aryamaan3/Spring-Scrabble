@@ -29,5 +29,6 @@ script:
   #- mvn exec:java -Dexec.args="closingAtTheEnd" &
   #- cd ../joueur
   #- mvn exec:java
+  - mvn test
   - cd appariement
   - mvn exec:java
