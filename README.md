@@ -1,7 +1,7 @@
 # scrabble-td2-darpa_g
 scrabble-td2-darpa_g created by GitHub Classroom
 
-# partie.partie
+# partie
 
 Grille (matrice)
 
@@ -19,29 +19,22 @@ vérifieMot()
 
 gestionTour()
 
-gestionPoint()
+attributionPoint()
 
 incrireUnMotDansLaGrille()
 
 distributionLettre()
 
-# joueur.joueur
+# joueur
 
 nom
 
 ---
-
-appelAnagrammeurPourTrouverUnMot()
-
-voirLettre()
-
-piocherLettre()
-
-vérifiePoint()
-
-proposerMot()
-
-changerLettre()
+public ArrayList<String> jouer(Plateau plateau, ArrayList<Char> Lettres){
+  
+  anagrammeur.trouveMotAvecLettre(Plateau plateau, Array<Char> Lettre)
+  
+  }
 
 # Anagrammeur
 
@@ -49,7 +42,7 @@ listeMotsValides
 
 ---
 
-trouveMotAvecLettre()
+public ArrayList<String> trouveMotAvecLettre(Plateau plateau, Array<Char> Lettre)
 
 # Appareillement
 
