@@ -11,6 +11,8 @@ lettresDesJoueurs
 
 dictionnaire / liste des mots
 
+joueurActuel
+
 -
 
 vérifieMot()
@@ -51,4 +53,3 @@ trouveMotAvecLettre()
 
 # Appareillement
 
-Gestions des tours dans partie ou appariement?
