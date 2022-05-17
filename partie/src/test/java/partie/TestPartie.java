@@ -1,5 +1,6 @@
 package partie;
 
+import joueur.Joueur;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -10,8 +11,8 @@ public class TestPartie {
 
     @Test
     public void TestGetMain() {
-        ArrayList<Integer> joueursT = new ArrayList<>();
-        joueursT.add(1);
+        ArrayList<Joueur> joueursT = new ArrayList<>();
+        joueursT.add(new Joueur(1));
         Partie partieT = new Partie(joueursT);
         partieT.getMain(0);
         ArrayList<Character> compare = new ArrayList<>();
