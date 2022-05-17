@@ -4,18 +4,6 @@
     <modelVersion>4.0.0</modelVersion>
     <dependencies>
         <dependency>
-            <groupId>scrabble-td2-darpa_g</groupId>
-            <artifactId>partie</artifactId>
-            <version>1</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>scrabble-td2-darpa_g</groupId>
-            <artifactId>joueur</artifactId>
-            <version>1</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -43,14 +31,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <mainClass>appariement.Appariement</mainClass>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
