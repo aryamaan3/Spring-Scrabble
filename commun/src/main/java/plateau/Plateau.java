@@ -24,4 +24,12 @@ public class Plateau
     {
         this.plateau = plateau;
     }
+
+    public int getLargeur() {
+        return largeur;
+    }
+
+    public int getLongeur() {
+        return longeur;
+    }
 }
