@@ -4,14 +4,20 @@ import java.util.ArrayList;
 
 public class Joueur {
     int id;
+
     public Joueur (int id)
     {
         this.id = id;
     }
 
-    public String jouer (ArrayList<Character> main)
+    public int getId()
     {
-        String mot = new StringBuilder().append(main.get(2)).append(main.get(3)).append(main.get(5)).append(main.get(0)).toString();
-        return mot;
+        return this.id;
+    }
+
+    //TODO : modifier le param en Lettre quand c'est codé
+    public String jouer (String main)
+    {
+        return main;
     }
 }
