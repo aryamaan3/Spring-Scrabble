@@ -7,10 +7,10 @@ public class Case
 
     public Case(int type)
     {
-        this.type = getType(type);
+        this.type = attibuerType(type);
     }
 
-    private TypeDeCase getType(int type)
+    private TypeDeCase attibuerType(int type)
     {
         switch(type)
         {
@@ -45,4 +45,9 @@ public class Case
     {
         return this.type;
     }
+
+    public void setValeur(Character c){
+        this.valeur = c;
+    }
+
 }
