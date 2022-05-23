@@ -32,4 +32,19 @@ public class Plateau
     public int getLongeur() {
         return longeur;
     }
+
+    public Case getCentre(){
+        for (int i = 0; this.plateau.size()<i; i++){
+            for (int j= 0; this.plateau.get(i).size()<j; j++){
+                if(this.plateau.get(i).get(j).getType() == TypeDeCase.CENTER){
+                    return this.plateau.get(i).get(j);
+                }
+            }
+        }
+        return null;
+    }
+
+    public Case getCase(int x, int y){
+        return this.plateau.get(y).get(x);
+    }
 }

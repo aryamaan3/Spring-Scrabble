@@ -43,6 +43,14 @@ public class Anagrammeur {
         return dictionnaire;
     }
 
+    public Plateau getPlateau() {
+        return plateau;
+    }
+
+    public void setPlateau(Plateau plateau) {
+        this.plateau = plateau;
+    }
+
     /**
      * Recherche dans le dictionnaire les mots possibles
      * @param lettres
@@ -56,24 +64,42 @@ public class Anagrammeur {
             List<String> motSplit = new ArrayList<String>(Arrays.asList(dictionnaire.get(i).split("")));
             if ((motSplit.containsAll(lettresSplit)) && (motSplit.size() == lettresSplit.size())){
                 motsPossibles.add(dictionnaire.get(i));
-                dictionnaire.remove(i);
+                //dictionnaire.remove(i); après
             }
         }
         return motsPossibles;
     }
 
-    ArrayList<String> getPositionMot(String lettres){
+    ArrayList<Case> getPositionMot(String lettres){
+        ArrayList<Case> resu = new ArrayList<>();
+
+        //Premier mot trouvé
         String motPossible = getMotPossible(lettres).get(0);
-        // Todo: ajouter les postions dans la classe case
-        Case centre = new Case('5');
 
-        return null;
+        //PREMIER TOUR!!!
+        Case centre = plateau.getCentre();
+        int xCentre = centre.getX();
+        int yCentre = centre.getY();
+
+        for (int i=0 ; i<motPossible.length() ; i++){
+            if(i==0){
+                centre.setValeur(motPossible.charAt(i));
+                resu.add(centre);
+            }
+            else{
+                resu.add(plateau.getCase(xCentre + i, yCentre));
+            }
+
+        }
+        //
+
+        return resu;
     }
 
-    private ArrayList<String> trouveMotLettre(String lettres, Plateau plateau){
-        return null;
+    private ArrayList<Case> trouveMotLettre(String lettres, Plateau plateau) throws IOException {
+        this.setPlateau(plateau);
+        ArrayList<Case> cases = getPositionMot(lettres);
+        return cases;
     }
-
-
 
 }

@@ -12,6 +12,7 @@ public class Case {
         this.type = getType(type);
     }
 
+
     private TypeDeCase getType(int type) {
         switch (type) {
             case 0:
