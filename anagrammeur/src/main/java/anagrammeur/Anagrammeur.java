@@ -1,5 +1,6 @@
 package anagrammeur;
 
+import plateau.Case;
 import plateau.Plateau;
 
 import java.io.*;
@@ -59,6 +60,14 @@ public class Anagrammeur {
             }
         }
         return motsPossibles;
+    }
+
+    ArrayList<String> getPositionMot(String lettres){
+        String motPossible = getMotPossible(lettres).get(0);
+        // Todo: ajouter les postions dans la classe case
+        Case centre = new Case('5');
+
+        return null;
     }
 
     private ArrayList<String> trouveMotLettre(String lettres, Plateau plateau){

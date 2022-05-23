@@ -1,19 +1,19 @@
 package plateau;
 
-public class Case
-{
+public class Case {
     private TypeDeCase type;
     private Character valeur;
+    private int x;
+    private int y;
+
 
     public Case(int type)
     {
         this.type = getType(type);
     }
 
-    private TypeDeCase getType(int type)
-    {
-        switch(type)
-        {
+    private TypeDeCase getType(int type) {
+        switch (type) {
             case 0:
                 return TypeDeCase.NORMAL;
             case 1:
@@ -31,18 +31,37 @@ public class Case
         return null;
     }
 
-    public boolean isEmpty()
-    {
+
+    public boolean isEmpty() {
         return this.valeur == ' ';
     }
 
-    public Character getValeur()
-    {
+    public Character getValeur() {
         return this.valeur;
     }
 
-    public TypeDeCase getType()
-    {
+    public TypeDeCase getType() {
         return this.type;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setValeur(Character valeur) {
+        this.valeur = valeur;
+    }
+
 }
