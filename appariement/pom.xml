@@ -13,6 +13,12 @@
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>scrabble-td2-darpa_g</groupId>
+            <artifactId>commun</artifactId>
+            <version>1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <parent>
         <groupId>scrabble-td2-darpa_g</groupId>
@@ -31,6 +37,14 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <mainClass>appariement.AppariementApplication</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

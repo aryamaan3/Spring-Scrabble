@@ -1,4 +1,4 @@
-package joueur;
+package joueurApplication.joueur;
 
 import org.testng.annotations.Test;
 

@@ -1,31 +1,50 @@
 package partie;
 
-import joueur.Joueur;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 public class Partie {
-    HashMap<Integer, Joueur> joueurs = new HashMap<>();
+    ArrayList<Integer> joueurs = new ArrayList<>();
     //TODO : peut etre à remplacer par des classes ?
+    HashMap<Integer, String> joueursUrls = new HashMap<>();
     HashMap<Integer, Integer> joueurPoints = new HashMap<>();
     HashMap<Integer, Queue<Character>> main = new HashMap<>();
     static final int kTailleMain = 7;
     static final String kRepiocheMot = "imout";
+    private static final String kHttp = "http://";
 
-    public Partie(ArrayList<Joueur> joueurs) {
-        for (Joueur joueur : joueurs)
-        {
-            this.joueurs.put(joueur.getId(), joueur);
-        }
+    @Autowired
+    PartieConsumer linker;
+
+    public Partie()
+    {}
+
+    void setJoueurs(ArrayList<Integer> joueurs, ArrayList<String> urls)
+    {
+        this.joueurs = joueurs;
+        this.joueursUrls.clear();
+        //TODO : loop on urls and set in hashmap instead of hardcoding 1st player
+        this.joueursUrls.put(joueurs.get(0), urls.get(0));
+        appelJoueur(1);
+    }
+
+    void appelJoueur(int id)
+    {
+        String url = joueursUrls.get(id);
+        System.out.println(linker.jouer(kHttp + url));
     }
 
     /**
      * Transfome la queue de char en String pour l'envoi au
      * Joueur
-     * @param id du joueur
-     * @return La main du joueur
+     * @param id du joueurApplication.joueur
+     * @return La main du joueurApplication.joueur
      */
-    String getMain(int id) {
+    String getMain(int id)
+    {
         return this.main.get(id).stream()
                 .map(Object::toString)
                 .reduce((acc, e) -> acc + e)
@@ -33,14 +52,15 @@ public class Partie {
     }
 
     /**
-     * Demande le joueur avec l'id de choisir un mot
+     * Demande le joueurApplication.joueur avec l'id de choisir un mot
      * afin de jouer
-     * @param id du joueur en question
+     * @param id du joueurApplication.joueur en question
      * @return le mot choisi
      */
     String demandeJouer(int id)
     {
-        String mot = this.joueurs.get(id).jouer(getMain(id));
+        //String mot = this.joueurs.get(id).jouer(getMain(id));
+        String mot = "ss";
         if (Objects.equals(mot, kRepiocheMot))
         {
             //TODO : this means player wants to pick new letters
@@ -56,7 +76,7 @@ public class Partie {
 
     /**
      * On place le mot sur le plateau
-     * @param mot choisi par le joueur
+     * @param mot choisi par le joueurApplication.joueur
      */
     void placerMot(String mot) //TODO : String à remplacer
     {
@@ -65,9 +85,9 @@ public class Partie {
 
     /**
      * Ajoute les points obtenus grace au mot placé
-     * au score du joueur
-     * @param id du joueur
-     * @param mot placé par le joueur
+     * au score du joueurApplication.joueur
+     * @param id du joueurApplication.joueur
+     * @param mot placé par le joueurApplication.joueur
      */
     void attribuerPoints(int id, String mot) //TODO : String à remplacer par Lettre
     {
@@ -75,9 +95,9 @@ public class Partie {
     }
 
     /**
-     * Dans le cas où le joueur trouve qu'il ne peut pas faire un mot
+     * Dans le cas où le joueurApplication.joueur trouve qu'il ne peut pas faire un mot
      * il demande de changer sa main
-     * @param id du joueur en question
+     * @param id du joueurApplication.joueur en question
      */
     void RepiocheLettres(int id)
     {
@@ -86,7 +106,7 @@ public class Partie {
 
     /**
      * Verifie si le mot choisi est dans le fichier liste_francais
-     * @param mot choisi par le joueur
+     * @param mot choisi par le joueurApplication.joueur
      * @return vrai si le mot existe
      */
     boolean verifierMot(String mot) //TODO : String à remplacer par Lettre
@@ -106,8 +126,8 @@ public class Partie {
     }
 
     /**
-     * Rempli la main du joueur
-     * @param id du joueur
+     * Rempli la main du joueurApplication.joueur
+     * @param id du joueurApplication.joueur
      */
     void fillMain(int id)
     {
@@ -121,9 +141,9 @@ public class Partie {
     }
 
     /**
-     * Initialise la main du joueur
-     * @param id du joueur
-     * @return Main du joueur
+     * Initialise la main du joueurApplication.joueur
+     * @param id du joueurApplication.joueur
+     * @return Main du joueurApplication.joueur
      */
     Queue<Character> initMain(int id)
     {
@@ -136,12 +156,12 @@ public class Partie {
     }
 
     /**
-     * Initialise la partie
-     * 1. Rempli les mains de chaque joueur
+     * Initialise la PartieApplication.partie
+     * 1. Rempli les mains de chaque joueurApplication.joueur
      */
     void setupPartie()
     {
-        for (Integer id : this.joueurs.keySet())
+        for (Integer id : this.joueurs)
         {
             this.main.put(id, initMain(id));
             this.joueurPoints.put(id, 0);
@@ -154,23 +174,16 @@ public class Partie {
     }
 
     /**
-     * Lance la partie
+     * Lance la PartieApplication.partie
      */
-    void lancerPartie() {
+    public void lancerPartie() {
         setupPartie();
         System.out.println("Le jeu commence");
         System.out.println("Il y a " + joueurs.size() + " joueurs");
         System.out.println("------------------------------------");
-        System.out.println("Le joueur " + 1 + " va commencer par choisir un mot");
-        System.out.println("Le joueur " + 1 + " a choisi le mot : " + demandeJouer(1));
-        System.out.println("Le joueur " + 1 + " a desormais " + getPoints(1) + " points");
+        System.out.println("Le joueurApplication.joueur " + 1 + " va commencer par choisir un mot");
+        System.out.println("Le joueurApplication.joueur " + 1 + " a choisi le mot : " + demandeJouer(1));
+        System.out.println("Le joueurApplication.joueur " + 1 + " a desormais " + getPoints(1) + " points");
         System.out.println("-----------------Fin----------------");
-    }
-
-    public static void main(String[] args) {
-        ArrayList<Joueur> joueurs = new ArrayList<>();
-        joueurs.add(new Joueur(1));
-        Partie partie = new Partie(joueurs);
-        partie.lancerPartie();
     }
 }
