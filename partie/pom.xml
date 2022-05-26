@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -16,9 +17,13 @@
         </dependency>
         <dependency>
             <groupId>scrabble-td2-darpa_g</groupId>
-            <artifactId>joueur</artifactId>
+            <artifactId>joueurApplication.joueur</artifactId>
             <version>1</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
     </dependencies>
 
@@ -29,8 +34,7 @@
     </parent>
 
 
-    <groupId>scrabble-td2-darpa_g</groupId>
-    <artifactId>partie</artifactId>
+    <artifactId>PartieApplication.partie</artifactId>
     <version>1</version>
 
     <properties>
@@ -44,7 +48,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-                    <mainClass>partie.Partie</mainClass>
+                    <mainClass>partie.PartieApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

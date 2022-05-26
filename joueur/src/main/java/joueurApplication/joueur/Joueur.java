@@ -1,6 +1,4 @@
-package joueur;
-
-import java.util.ArrayList;
+package joueurApplication.joueur;
 
 public class Joueur {
     int id;
