@@ -1,46 +1,52 @@
 package appariement;
 
-import joueur.Joueur;
-import partie.Partie;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
-public class Appariement {
-    Partie partie;
-    ArrayList<Joueur> joueurs;
-    public Appariement (Partie p, ArrayList<Joueur> j)
+@Component
+public class Appariement
+{
+    Queue<Integer> joueursLibres = new LinkedList<>();
+    HashMap<Integer, String> joueursUrls = new HashMap<>();
+    Queue<String> partiesLibres = new LinkedList<>();
+    private static final String kHttp = "http://";
+
+    @Autowired AppariementConsumer app;
+
+    Appariement()
+    {}
+
+    void addJoueur(int id, String url)
     {
-        this.partie = p;
-        this.joueurs = j;
+        joueursLibres.add(id);
+        joueursUrls.put(id, url);
+
+        verifieJeuPossible();
     }
 
-    public ArrayList<Character> getMain (int id)
+    void addPartie(String url)
     {
-        return partie.getMain(id);
+        partiesLibres.add(url);
+
+        verifieJeuPossible();
     }
 
-    public String demanderJouer (int id)
+    void verifieJeuPossible()
     {
-        return this.joueurs.get(id-1).jouer(getMain(id-1));
+        if (joueursLibres.size() > 0 && partiesLibres.size() > 0)
+        {
+            //TODO : pour l'instant on prends qu'un joueur
+            int j1 = joueursLibres.poll();
+            String j1Url = joueursUrls.remove(j1);
+            String partie = partiesLibres.poll();
+            app.creerPartie(kHttp + partie, j1, j1Url);
+        }
     }
 
-    public void lancerPartie ()
-    {
-        System.out.println("Le jeu commence");
-        System.out.println("Il y a " + joueurs.size() + " joueurs");
-        System.out.println("------------------------------------");
-        System.out.println("Le joueur " + 1 + " va commencer par choisir un mot");
-        System.out.println("Le joueur " + 1 + " a choisi le mot : " + demanderJouer(1));
-        System.out.println("-----------------Fin----------------");
-    }
-
-    public static void main(String[] args) {
-        ArrayList<Joueur> joueurs = new ArrayList<>();
-        joueurs.add(new Joueur(1));
-        ArrayList<Integer> idJoueurs = new ArrayList<>();
-        idJoueurs.add(1);
-        Partie partie = new Partie(idJoueurs);
-        Appariement linker = new Appariement(partie, joueurs);
-        linker.lancerPartie();
-    }
 }

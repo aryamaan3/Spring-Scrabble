@@ -31,4 +31,8 @@ script:
   #- mvn exec:java
   - mvn test
   - cd appariement
-  - mvn exec:java
+  - mvn exec:java &
+  - cd ../joueur
+  - mvn exec:java &
+  - cd ../partie
+  - mvn exec:java &

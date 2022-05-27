@@ -4,18 +4,6 @@
     <modelVersion>4.0.0</modelVersion>
     <dependencies>
         <dependency>
-            <groupId>scrabble-td2-darpa_g</groupId>
-            <artifactId>partie</artifactId>
-            <version>1</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>scrabble-td2-darpa_g</groupId>
-            <artifactId>joueur</artifactId>
-            <version>1</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -24,6 +12,12 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>scrabble-td2-darpa_g</groupId>
+            <artifactId>commun</artifactId>
+            <version>1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <parent>
@@ -48,7 +42,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-                    <mainClass>appariement.Appariement</mainClass>
+                    <mainClass>appariement.AppariementApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

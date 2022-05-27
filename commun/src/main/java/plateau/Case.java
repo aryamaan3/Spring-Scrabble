@@ -9,12 +9,16 @@ public class Case {
 
     public Case(int type)
     {
-        this.type = getType(type);
+        this.type = attibuerType(type);
     }
-
 
     private TypeDeCase getType(int type) {
         switch (type) {
+
+    private TypeDeCase attibuerType(int type)
+    {
+        switch(type)
+        {
             case 0:
                 return TypeDeCase.NORMAL;
             case 1:
@@ -31,7 +35,6 @@ public class Case {
 
         return null;
     }
-
 
     public boolean isEmpty() {
         return this.valeur == ' ';
@@ -61,8 +64,8 @@ public class Case {
         this.y = y;
     }
 
-    public void setValeur(Character valeur) {
-        this.valeur = valeur;
+    public void setValeur(Character c){
+        this.valeur = c;
     }
 
 }
