@@ -7,6 +7,8 @@ public class TestPointLettre {
 
     @Test
     public void testEnum(){
-        assertEquals(PointLettre.valueOf("A").value,"1"); // test retrieving value of enum with a String in input
+        assertEquals(1, (int) PointLettre.valueOf("A").value); // test retrieving value of enum with a String in input
+        assertSame(PointLettre.valueOf("A").value, 1); // to check if it's same type 
+
     }
 }
