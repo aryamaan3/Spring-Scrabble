@@ -38,6 +38,7 @@ script:
   - mvn exec:java &
   - - cd ../anagrammeur
   - mvn exec:java &
+  - cd ..
   #- Lance un docker test d'anagrammeur
   - docker build anagrammeur -t scrabble:anagrammeur
   - docker run -d --name anagrammeur_test -e PORT="8084" -e LANCEMENT="POUR_LES_TEST" -p 8084:8084 scrabble:anagrammeur
