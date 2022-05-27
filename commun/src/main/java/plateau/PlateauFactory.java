@@ -24,6 +24,13 @@ public class PlateauFactory {
 
     static List<List<Case>> creerPlateau()
     {
+        for (int i = 0; plateau.size()<i; i++){
+            for (int j= 0; plateau.get(i).size()<j; j++){
+                plateau.get(i).get(j).setY(i);
+                plateau.get(i).get(j).setX(j);
+            }
+        }
         return plateau;
     }
+
 }
