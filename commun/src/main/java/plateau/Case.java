@@ -12,11 +12,26 @@ public class Case {
         this.type = attibuerType(type);
     }
 
-    private TypeDeCase getType(int type) {
-        switch (type) {
+    private TypeDeCase attibuerType(int type) {
+        switch(type)
+        {
+            case 0:
+                return TypeDeCase.NORMAL;
+            case 1:
+                return TypeDeCase.LETTRE_DOUBLE;
+            case 2:
+                return TypeDeCase.LETTRE_TRIPLE;
+            case 3:
+                return TypeDeCase.MOT_DOUBLE;
+            case 4:
+                return TypeDeCase.MOT_TRIPLE;
+            case 5:
+                return TypeDeCase.CENTER;
+        }
+        return null;
+    }
 
-    private TypeDeCase attibuerType(int type)
-    {
+    private TypeDeCase getType(int type) {
         switch(type)
         {
             case 0:
