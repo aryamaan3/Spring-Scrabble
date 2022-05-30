@@ -12,6 +12,8 @@ public class Anagrammeur {
 
     private ArrayList<String> dictionnaire;
     private ArrayList<String> motsPossibles;
+    private ArrayList<Case> caseExtension;
+    private ArrayList<Case> posedCases;
     private Plateau plateau;
 
     public Anagrammeur() throws IOException {
@@ -37,6 +39,28 @@ public class Anagrammeur {
         } finally {
             br.close();
         }
+    }
+
+    private void initCasePose(){
+        posedCases = plateau.getPosedCase();
+        initCaseExtended();
+    }
+
+    private void initCaseExtended(){
+        posedCases.forEach((letter) -> {
+            if(letter.getX()+1 < plateau.getLongeur() && plateau.getCase(letter.getX()+1, letter.getY()).isEmpty()){
+                caseExtension.add(plateau.getCase(letter.getX()+1, letter.getY()));
+            }
+            if(letter.getY()+1 < plateau.getLargeur() && plateau.getCase(letter.getX(), letter.getY()+1).isEmpty()){
+                caseExtension.add(plateau.getCase(letter.getX()+1, letter.getY()));
+            }
+            if(letter.getX()-1 > 0 && plateau.getCase(letter.getX()-1, letter.getY()).isEmpty()){
+                caseExtension.add(plateau.getCase(letter.getX()+1, letter.getY()));
+            }
+            if(letter.getY()-1 > 0 && plateau.getCase(letter.getX(), letter.getY()-1).isEmpty()){
+                caseExtension.add(plateau.getCase(letter.getX()+1, letter.getY()));
+            }
+        });
     }
 
     ArrayList<String> getDictionnaire(){
@@ -73,31 +97,38 @@ public class Anagrammeur {
     ArrayList<Case> getPositionMot(String lettres){
         ArrayList<Case> resu = new ArrayList<>();
 
-        //Premier mot trouvé
-        String motPossible = getMotPossible(lettres).get(0);
-
         //PREMIER TOUR!!!
-        Case centre = plateau.getCentre();
-        int xCentre = centre.getX();
-        int yCentre = centre.getY();
+        //Premier mot trouvé
+        if(posedCases.size() == 0){
+            String motPossible = getMotPossible(lettres).get(0);
+            Case centre = plateau.getCentre();
+            int xCentre = centre.getX();
+            int yCentre = centre.getY();
 
-        for (int i=0 ; i<motPossible.length() ; i++){
-            if(i==0){
-                centre.setValeur(motPossible.charAt(i));
-                resu.add(centre);
+            for (int i=0 ; i<motPossible.length() ; i++){
+                if(i==0){
+                    centre.setValeur(motPossible.charAt(i));
+                    resu.add(centre);
+                }
+                else{
+                    resu.add(plateau.getCase(xCentre + i, yCentre));
+                }
             }
-            else{
-                resu.add(plateau.getCase(xCentre + i, yCentre));
-            }
-
         }
-        //
+        else {
+            caseExtension.forEach((caseVide) -> {
+                ArrayList<Case> ligne = plateau.getLigne(caseVide.getY());
+                ArrayList<Case> colonne = plateau.getColonne(caseVide.getX());
+            });
+        }
+
 
         return resu;
     }
 
     private ArrayList<Case> trouveMotLettre(String lettres, Plateau plateau) throws IOException {
         this.setPlateau(plateau);
+        initCasePose();
         ArrayList<Case> cases = getPositionMot(lettres);
         return cases;
     }

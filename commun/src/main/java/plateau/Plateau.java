@@ -1,5 +1,6 @@
 package plateau;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Plateau
@@ -46,5 +47,33 @@ public class Plateau
 
     public Case getCase(int x, int y){
         return this.plateau.get(y).get(x);
+    }
+
+    public ArrayList<Case> getPosedCase(){
+        ArrayList<Case> cases = new ArrayList<>();
+        for (int i = 0; this.plateau.size()<i; i++){
+            for (int j= 0; this.plateau.get(i).size()<j; j++){
+                if(!this.plateau.get(i).get(j).isEmpty()){
+                    cases.add(this.plateau.get(i).get(j));
+                }
+            }
+        }
+        return cases;
+    }
+
+    public ArrayList<Case> getLigne(int y){
+        ArrayList<Case> ligne = new ArrayList<>();
+        for(int i = 0 ; i<getLongeur() ; i++){
+            ligne.add(plateau.get(y).get(i));
+        }
+        return ligne;
+    }
+
+    public ArrayList<Case> getColonne(int x){
+        ArrayList<Case> colonne = new ArrayList<>();
+        for(int i = 0 ; i<getLongeur() ; i++){
+            colonne.add(plateau.get(i).get(x));
+        }
+        return colonne;
     }
 }
