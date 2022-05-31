@@ -37,7 +37,7 @@ script:
   - cd ../partie
   - mvn exec:java &
   - - cd ../anagrammeur
-  - mvn exec:java &
+  - mvn exec:java
   - cd ..
   #- Lance un docker test d'anagrammeur
   - docker build anagrammeur -t scrabble:anagrammeur
