@@ -111,14 +111,42 @@ public class Anagrammeur {
                     resu.add(centre);
                 }
                 else{
+                    plateau.getCase(xCentre + i, yCentre).setValeur(motPossible.charAt(i));
                     resu.add(plateau.getCase(xCentre + i, yCentre));
                 }
             }
         }
         else {
-            caseExtension.forEach((caseVide) -> {
-                ArrayList<Case> ligne = plateau.getLigne(caseVide.getY());
-                ArrayList<Case> colonne = plateau.getColonne(caseVide.getX());
+            posedCases.forEach((caseRemplie) -> {
+//                ArrayList<Case> ligne = plateau.getLigne(casesRemplies.getY());
+//                String ligneVal = "";
+//                for (int i=0 ; i<ligne.size(); i++){
+//                    ligneVal += ligne.get(i).getValeur();
+//                }
+//                ArrayList<Case> colonne = plateau.getColonne(casesRemplies.getX());
+                char valPlateau = caseRemplie.getValeur();
+                String temp = lettres+valPlateau;
+                ArrayList<String> motsPossibles = getMotPossible(temp);
+                if(caseRemplie.getX()+1<plateau.getLongeur() && plateau.getCase(caseRemplie.getX()+1, caseRemplie.getY()).isEmpty()){
+                    // ajouter les lettres
+                }
+                if(caseRemplie.getX()-1>0 && plateau.getCase(caseRemplie.getX()-1, caseRemplie.getY()).isEmpty()){
+                    // ajouter les lettres
+                }
+                if(caseRemplie.getY()+1<plateau.getLargeur() && plateau.getCase(caseRemplie.getX(), caseRemplie.getY()+1).isEmpty()){
+                    // ajouter les lettres
+                }
+                if(caseRemplie.getX()-1>0 && plateau.getCase(caseRemplie.getX()+1, caseRemplie.getY()-1).isEmpty()){
+                    // ajouter les lettres
+                }
+                for (int i = 0; i<motsPossibles.size(); i++){
+                    int position = motsPossibles.get(i).indexOf(valPlateau);
+                    String beforePos = motsPossibles.get(i).substring(0, position);
+                    String afterPos = motsPossibles.get(i).substring(position, motsPossibles.get(i).length());
+                    /*for(int j = 0; j<motsPossibles.get(i).length(); j++){
+                        //char val = motsPossibles.get(i).get(j);
+                    }*/
+                }
             });
         }
 
