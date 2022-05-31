@@ -1,5 +1,7 @@
 package plateau;
 
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers;
+
 public class Case {
     private TypeDeCase type;
     private Character valeur;
@@ -9,16 +11,11 @@ public class Case {
 
     public Case(int type)
     {
-        this.type = attibuerType(type);
+        this.type = getType(type);
     }
 
     private TypeDeCase getType(int type) {
         switch (type) {
-
-    private TypeDeCase attibuerType(int type)
-    {
-        switch(type)
-        {
             case 0:
                 return TypeDeCase.NORMAL;
             case 1:
@@ -31,9 +28,9 @@ public class Case {
                 return TypeDeCase.MOT_TRIPLE;
             case 5:
                 return TypeDeCase.CENTER;
+            default:
+                return null;
         }
-
-        return null;
     }
 
     public boolean isEmpty() {
