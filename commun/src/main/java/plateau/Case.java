@@ -12,6 +12,7 @@ public class Case {
     public Case(int type)
     {
         this.type = getType(type);
+        this.valeur = ' ';
     }
 
     private TypeDeCase getType(int type) {
