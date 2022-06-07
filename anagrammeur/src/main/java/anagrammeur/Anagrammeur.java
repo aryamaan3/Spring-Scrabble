@@ -94,7 +94,8 @@ public class Anagrammeur {
         return motsPossibles;
     }
 
-    ArrayList<Case> getPositionMot(String lettres){
+
+    /*ArrayList<Case> getPositionMot(String lettres){
         ArrayList<Case> resu = new ArrayList<>();
 
         //PREMIER TOUR!!!
@@ -118,47 +119,43 @@ public class Anagrammeur {
         }
         else {
             posedCases.forEach((caseRemplie) -> {
-//                ArrayList<Case> ligne = plateau.getLigne(casesRemplies.getY());
-//                String ligneVal = "";
-//                for (int i=0 ; i<ligne.size(); i++){
-//                    ligneVal += ligne.get(i).getValeur();
-//                }
-//                ArrayList<Case> colonne = plateau.getColonne(casesRemplies.getX());
                 char valPlateau = caseRemplie.getValeur();
                 String temp = lettres+valPlateau;
                 ArrayList<String> motsPossibles = getMotPossible(temp);
-                if(caseRemplie.getX()+1<plateau.getLongeur() && plateau.getCase(caseRemplie.getX()+1, caseRemplie.getY()).isEmpty()){
-                    // ajouter les lettres
-                }
-                if(caseRemplie.getX()-1>0 && plateau.getCase(caseRemplie.getX()-1, caseRemplie.getY()).isEmpty()){
-                    // ajouter les lettres
-                }
-                if(caseRemplie.getY()+1<plateau.getLargeur() && plateau.getCase(caseRemplie.getX(), caseRemplie.getY()+1).isEmpty()){
-                    // ajouter les lettres
-                }
-                if(caseRemplie.getX()-1>0 && plateau.getCase(caseRemplie.getX()+1, caseRemplie.getY()-1).isEmpty()){
-                    // ajouter les lettres
+                for(int i = 0; i<motsPossibles.size();i++){
+                    if(caseRemplie.getX()+motsPossibles.get(i).length()<plateau.getLongeur() && plateau.getCase(caseRemplie.getX()+1, caseRemplie.getY()).isEmpty()){
+                        // ajouter les lettres
+                    }
+                    if(caseRemplie.getX()-motsPossibles.get(i).length()>0 && plateau.getCase(caseRemplie.getX()-1, caseRemplie.getY()).isEmpty()){
+                        // ajouter les lettres
+                    }
+                    if(caseRemplie.getY()+motsPossibles.get(i).length()<plateau.getLargeur() && plateau.getCase(caseRemplie.getX(), caseRemplie.getY()+1).isEmpty()){
+                        // ajouter les lettres
+                    }
+                    if(caseRemplie.getX()-motsPossibles.get(i).length()>0 && plateau.getCase(caseRemplie.getX()+1, caseRemplie.getY()-1).isEmpty()){
+                        // ajouter les lettres
+                    }
                 }
                 for (int i = 0; i<motsPossibles.size(); i++){
                     int position = motsPossibles.get(i).indexOf(valPlateau);
                     String beforePos = motsPossibles.get(i).substring(0, position);
                     String afterPos = motsPossibles.get(i).substring(position, motsPossibles.get(i).length());
-                    /*for(int j = 0; j<motsPossibles.get(i).length(); j++){
+                    for(int j = 0; j<motsPossibles.get(i).length(); j++){
                         //char val = motsPossibles.get(i).get(j);
-                    }*/
+                    }
                 }
             });
         }
 
 
         return resu;
-    }
+    }*/
 
-    private ArrayList<Case> trouveMotLettre(String lettres, Plateau plateau) throws IOException {
+    /*private ArrayList<Case> trouveMotLettre(String lettres, Plateau plateau) throws IOException {
         this.setPlateau(plateau);
         initCasePose();
         ArrayList<Case> cases = getPositionMot(lettres);
         return cases;
-    }
+    }*/
 
 }

@@ -76,4 +76,22 @@ public class Plateau
         }
         return colonne;
     }
+
+    @Override
+    public String toString() {
+        String res = null;
+        for (int i = 0; this.plateau.size()<i; i++){
+            for (int j= 0; this.plateau.get(i).size()<j; j++){
+                if(!this.plateau.get(i).get(j).isEmpty()){
+                    res += '|'+this.plateau.get(i).get(j).getValeur();
+                }else {
+                    res += "|_" ;
+                }
+                if (j == getLongeur()){
+                    res += "\n";
+                }
+            }
+        }
+        return res;
+    }
 }
