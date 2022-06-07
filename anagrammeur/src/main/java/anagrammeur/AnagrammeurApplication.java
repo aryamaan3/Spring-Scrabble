@@ -13,12 +13,4 @@ public class AnagrammeurApplication
     {
         SpringApplication.run(AnagrammeurApplication.class, args);
     }
-
-    @Bean
-    public CommandLineRunner init(@Autowired AnagrammeurConsumer client)
-    {
-        return args -> {
-            client.subscribe();
-        };
-    }
 }
