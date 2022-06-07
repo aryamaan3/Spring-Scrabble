@@ -42,9 +42,6 @@ script:
   - mvn exec:java &
   - cd ../partie
   - mvn exec:java &
-  #- - cd ../anagrammeur
-  #- mvn exec:java &
-  - cd ..
   #- Lance un docker test d'anagrammeur
 
   # Précision des ports pas utile ?
