@@ -30,7 +30,8 @@ public enum PointLettre {
 
     public final Integer value;
 
-    PointLettre(Integer value){
+    PointLettre(Integer value)
+    {
         this.value = value;
     }
 }

@@ -10,10 +10,13 @@ public class Case {
     public Case(int type)
     {
         this.type = attibuerType(type);
-        this.valeur = ' ';
+        this.valeur = Character.MIN_VALUE;
     }
 
-    private TypeDeCase attibuerType(int type) {
+    public Case(){}
+
+    private TypeDeCase attibuerType(int type)
+    {
         switch(type)
         {
             case 0:
@@ -32,7 +35,8 @@ public class Case {
         return null;
     }
 
-    private TypeDeCase getType(int type) {
+    private TypeDeCase getType(int type)
+    {
         switch(type)
         {
             case 0:
@@ -52,36 +56,53 @@ public class Case {
         return null;
     }
 
-    public boolean isEmpty() {
+    public boolean isEmpty()
+    {
         return this.valeur == ' ';
     }
 
-    public Character getValeur() {
+    public Character getValeur()
+    {
         return this.valeur;
     }
 
-    public TypeDeCase getType() {
+    public TypeDeCase getType()
+    {
         return this.type;
     }
 
-    public int getX() {
+    public int getX()
+    {
         return x;
     }
 
-    public int getY() {
+    public int getY()
+    {
         return y;
     }
 
-    public void setX(int x) {
+    public void setX(int x)
+    {
         this.x = x;
     }
 
-    public void setY(int y) {
+    public void setY(int y)
+    {
         this.y = y;
     }
 
-    public void setValeur(Character c){
+    public void setValeur(Character c)
+    {
         this.valeur = c;
     }
 
+    @Override
+    public String toString() {
+        return "Case{" +
+                "type=" + type +
+                ", valeur=" + valeur +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

@@ -1,9 +1,14 @@
 package partie;
 
 import data.Message;
+import data.PayloadJoueur;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import plateau.Case;
+import plateau.Plateau;
+
+import java.util.ArrayList;
 
 @Component
 public class PartieConsumer
@@ -17,6 +22,11 @@ public class PartieConsumer
         this.builder = builder;
     }
 
+    /*public PartieConsumer()
+    {
+        this.builder = null;
+    }*/
+
     void subscribe()
     {
         WebClient client = builder.baseUrl(urlAppariement).build();
@@ -29,15 +39,15 @@ public class PartieConsumer
                 .block();
     }
 
-    String jouer(String url)
+    ArrayList<Case> jouer(String url, Plateau plateau, String MainDuJoueur)
     {
         WebClient client = builder.baseUrl(url).build();
         return client.get()
                 .uri("/jouer")
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(Message.class)
-                .map(Message::getMessage)
+                .bodyToMono(PayloadJoueur.class)
+                .map(PayloadJoueur::getPayloadJoueur)
                 .block();
     }
 }
