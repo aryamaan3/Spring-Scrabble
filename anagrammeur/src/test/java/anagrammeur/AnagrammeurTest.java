@@ -12,7 +12,7 @@ class AnagrammeurTest {
 
     AnagrammeurTest() throws IOException {
     }
-
+    /*
     @Test
     public void TestinitialiseDictionnaire() {
         ArrayList<String> dictionnaire = anagrammeur.getDictionnaire();
@@ -25,6 +25,6 @@ class AnagrammeurTest {
         assertEquals(22739, anagrammeur.getDictionnaire().size());
         listemot = anagrammeur.getMotPossible("abat-jour");
         assertEquals(22738, anagrammeur.getDictionnaire().size());
-    }
+    }*/
 
 }

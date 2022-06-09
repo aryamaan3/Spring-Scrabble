@@ -4,15 +4,21 @@
     <modelVersion>4.0.0</modelVersion>
     <dependencies>
         <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>scrabble-td2-darpa_g</groupId>
             <artifactId>commun</artifactId>
             <version>1</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -23,13 +29,25 @@
     </parent>
 
 
-    <groupId>scrabble-td2-darpa_g</groupId>
     <artifactId>anagrammeur</artifactId>
     <version>1</version>
 
     <properties>
         <java.version>17</java.version>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <mainClass>anagrammeur.Anagrammeur</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 
 

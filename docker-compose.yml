@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+
+
+    appariement:
+        image: scrabble:appariement
+        container_name: appariement
+        networks:
+          testing_net:
+            ipv4_address: 172.28.0.253
+
+
+    anagrammeur:
+        image: scrabble:anagrammeur
+        container_name: anagrammeur
+        networks:
+          testing_net:
+            ipv4_address: 172.28.0.252
+        depends_on :
+            - appariement
+
+
+    partie:
+        image: scrabble:partie
+        container_name: partie
+        networks:
+          testing_net:
+            ipv4_address: 172.28.0.251
+        depends_on :
+            - appariement
+
+    joueur:
+        image: scrabble:joueur
+        networks:
+          testing_net:
+            # ipv4_address: 172.28.0.253
+        depends_on :
+            - appariement
+
+networks:
+  testing_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
