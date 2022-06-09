@@ -29,7 +29,6 @@
     </parent>
 
 
-    <groupId>scrabble-td2-darpa_g</groupId>
     <artifactId>anagrammeur</artifactId>
     <version>1</version>
 
