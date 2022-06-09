@@ -12,8 +12,10 @@ public class TestPlateau {
 
     @Test
     public void testSetGetPlateau(){
-        System.out.println(pLT.toString());
-        //assertEquals(pT,pLT.getPlateau());
+        pT = PlateauFactory.creerPlateau();
+        pLT.setPlateau(pT);
+        System.out.println(pT.toString());
+        assertEquals(pT,pLT.getPlateau());
     }
 
 

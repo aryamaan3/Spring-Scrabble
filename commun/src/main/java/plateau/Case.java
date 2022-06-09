@@ -10,6 +10,7 @@ public class Case {
     public Case(int type)
     {
         this.type = attibuerType(type);
+        this.valeur = ' ';
     }
 
     private TypeDeCase attibuerType(int type) {
