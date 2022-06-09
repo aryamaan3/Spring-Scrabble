@@ -77,23 +77,24 @@ public class Plateau
         return colonne;
     }
 
-    @Override
-    public String toString() {
-        String res = "";
-        for (int i = 0; i<this.plateau.size(); i++){
-            for (int j= 0; j<this.plateau.get(i).size(); j++){
-                if(!this.plateau.get(i).get(j).isEmpty()){
-                    res += '|'+this.plateau.get(i).get(j).getValeur();
-                }else {
-                    res += "|_" ;
-                }
-                if (j == getLongeur()-1){
-                    res += "|\n";
-                }
-            }
-        }
-        return res;
+    public void setCase(int x, int y, Character val)
+    {
+        this.plateau.get(y).get(x).setValeur(val);
     }
 
-
+    @Override
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+        for (List<Case> aLine : this.plateau)
+        {
+            output.append("|");
+            for (Case aCase : aLine)
+            {
+                output.append(aCase.getValeur());
+                output.append("|");
+            }
+            output.append("\n");
+        }
+        return output.toString();
+    }
 }

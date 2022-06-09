@@ -2,16 +2,22 @@ package partie;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import plateau.Case;
+import plateau.Plateau;
+import plateau.PointLettre;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class Partie {
     ArrayList<Integer> joueurs = new ArrayList<>();
     //TODO : peut etre à remplacer par des classes ?
     HashMap<Integer, String> joueursUrls = new HashMap<>();
-    HashMap<Integer, Integer> joueurPoints = new HashMap<>();
+    Map<Integer, Integer> joueurPoints = new TreeMap<>();
     HashMap<Integer, Queue<Character>> main = new HashMap<>();
+    Plateau board = new Plateau();
+    int winnerId = 0;
     static final int kTailleMain = 7;
     static final String kRepiocheMot = "imout";
     private static final String kHttp = "http://";
@@ -28,13 +34,15 @@ public class Partie {
         this.joueursUrls.clear();
         //TODO : loop on urls and set in hashmap instead of hardcoding 1st player
         this.joueursUrls.put(joueurs.get(0), urls.get(0));
-        appelJoueur(1);
+        lancerPartie();
     }
 
-    void appelJoueur(int id)
+    ArrayList<Case> appelJoueur(int id)
     {
         String url = joueursUrls.get(id);
-        System.out.println(linker.jouer(kHttp + url));
+        return linker.jouer(kHttp + url, board, getMain(id));
+
+        //return linker.jouerTest(board, getMain(id));
     }
 
     /**
@@ -59,28 +67,43 @@ public class Partie {
      */
     String demandeJouer(int id)
     {
-        //String mot = this.joueurs.get(id).jouer(getMain(id));
-        String mot = "ss";
+        var motChoisie = appelJoueur(id);
+        var mot = caseToString(motChoisie);
         if (Objects.equals(mot, kRepiocheMot))
         {
             //TODO : this means player wants to pick new letters
         }
         if (verifierMot(mot))
         {
-            placerMot(mot);
-            attribuerPoints(id, mot);
+            placerMot(motChoisie);
+            attribuerPoints(id, motChoisie);
             return mot;
         }
+        // Si verifieMot renvoie false refaire tous le process avec appelJoueur
+        //TODO : reinitialiser la main du joueur avant de recommencer
         return demandeJouer(id);
+    }
+
+    String caseToString(ArrayList<Case> listCase)
+    {
+        StringBuilder mot = new StringBuilder();
+        for (Case aCase : listCase)
+        {
+            mot.append(aCase.getValeur());
+        }
+        return mot.toString();
     }
 
     /**
      * On place le mot sur le plateau
      * @param mot choisi par le joueurApplication.joueur
      */
-    void placerMot(String mot) //TODO : String à remplacer
+    void placerMot(ArrayList<Case> mot)
     {
-
+        for (Case aCase : mot)
+        {
+            board.setCase(aCase.getX(), aCase.getY(), aCase.getValeur());
+        }
     }
 
     /**
@@ -89,9 +112,14 @@ public class Partie {
      * @param id du joueurApplication.joueur
      * @param mot placé par le joueurApplication.joueur
      */
-    void attribuerPoints(int id, String mot) //TODO : String à remplacer par Lettre
+    void attribuerPoints(int id, ArrayList<Case> mot) //TODO : String à remplacer par Lettre
     {
-        this.joueurPoints.put(id, this.joueurPoints.get(id) + 10);
+        int points = 0;
+        for (Case lettre : mot)
+        {
+            points += PointLettre.valueOf(lettre.getValeur().toString().toUpperCase()).value;
+        }
+        joueurPoints.put(id, joueurPoints.get(id) + points);
     }
 
     /**
@@ -109,8 +137,9 @@ public class Partie {
      * @param mot choisi par le joueurApplication.joueur
      * @return vrai si le mot existe
      */
-    boolean verifierMot(String mot) //TODO : String à remplacer par Lettre
+    boolean verifierMot(String mot)
     {
+        //TODO : check if mot is okay and if it can be placed on board
         return true;
     }
 
@@ -170,20 +199,94 @@ public class Partie {
 
     int getPoints(int id)
     {
-        return joueurPoints.get(id);
+        return this.joueurPoints.get(id);
+    }
+
+    boolean isGameOn()
+    {
+        //sort joueursPoints by value
+        this.joueurPoints = sortByValue(joueurPoints);
+
+        for (int id : joueurs)
+        {
+            if (joueurPoints.get(id) > 50)
+            {
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
+    private Map<Integer, Integer> sortByValue(Map<Integer, Integer> map)
+    {
+        //sort tree map by value
+        Map<Integer, Integer> sortedMap = map.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+
+        return sortedMap;
+    }
+
+
+    String classement()
+    {
+        StringBuilder output = new StringBuilder();
+        output.append("Classement\n");
+        this.joueurPoints = sortByValue(this.joueurPoints);
+        // get keys
+        List<Integer> keys = new ArrayList<>(this.joueurPoints.keySet());
+
+        // reverse iterate on keys
+        for (int i = keys.size() - 1; i >= 0; i--)
+        {
+            output.append("Joueur " + (i + 1) + " - " + this.joueurPoints.get(keys.get(i)) + "\n");
+        }
+
+        return output.toString();
+    }
+
+    List<Integer> getWinners()
+    {
+        List<Integer> winners = new ArrayList<>();
+        for (int id : joueurs)
+        {
+            if (joueurPoints.get(id) > 50)
+            {
+                winners.add(id);
+            }
+        }
+        return winners;
     }
 
     /**
      * Lance la PartieApplication.partie
      */
-    public void lancerPartie() {
+    public void lancerPartie()
+    {
         setupPartie();
         System.out.println("Le jeu commence");
         System.out.println("Il y a " + joueurs.size() + " joueurs");
         System.out.println("------------------------------------");
-        System.out.println("Le joueurApplication.joueur " + 1 + " va commencer par choisir un mot");
-        System.out.println("Le joueurApplication.joueur " + 1 + " a choisi le mot : " + demandeJouer(1));
-        System.out.println("Le joueurApplication.joueur " + 1 + " a desormais " + getPoints(1) + " points");
+        int round = 1;
+        while (isGameOn())
+        {
+            //if (round == 3) loop = false;
+            System.out.println("Starting round : " + round);
+            for (int id : joueurs)
+            {
+                System.out.println("Le joueur " + id + " va commencer par choisir un mot");
+                int pointsBefore = getPoints(id);
+                System.out.println("Le joueur " + id + " a choisi le mot : " + demandeJouer(id));
+                System.out.println("Ce mot vaut " + (getPoints(id) - pointsBefore) + " points");
+            }
+            round ++;
+            System.out.println("------------------------------------");
+            System.out.println(classement());
+        }
         System.out.println("-----------------Fin----------------");
+        System.out.println("Le[s] gagnant[s] : " + getWinners());
     }
 }
