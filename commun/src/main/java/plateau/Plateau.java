@@ -77,6 +77,15 @@ public class Plateau
         return colonne;
     }
 
+    public int getNumberOfLettersPlacedOnColumn(int numCol){
+        ArrayList<Case> colonne = getColonne(numCol);
+        int nbLetters = 0;
+        for(Case lettre: colonne){
+            if(!lettre.isEmpty()) nbLetters++;
+        }
+        return nbLetters;
+    }
+
     public void setCase(int x, int y, Character val)
     {
         this.plateau.get(y).get(x).setValeur(val);
