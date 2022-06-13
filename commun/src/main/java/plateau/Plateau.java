@@ -6,14 +6,20 @@ import java.util.List;
 public class Plateau
 {
     private List<List<Case>> plateau;
-    private int longeur;
-    private int largeur;
+    private final int longeur;
+    private final int largeur;
 
     public Plateau()
     {
-        this.plateau = PlateauFactory.creerPlateau();
-        this.largeur = this.plateau.size();
-        this.longeur = this.plateau.get(0).size();
+        this.largeur = 15;
+        this.longeur = 15;
+    }
+
+    public Plateau(List<List<Case>> board)
+    {
+        this.largeur = 15;
+        this.longeur = 15;
+        this.plateau = board;
     }
 
     public List<List<Case>> getPlateau()

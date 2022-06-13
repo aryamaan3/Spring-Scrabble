@@ -1,36 +1,34 @@
 package joueurApplication.joueur;
 
+import data.PartieToJoueur;
 import data.PayloadJoueur;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import plateau.Case;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import plateau.Placement;
 
 import java.util.ArrayList;
 
 @RestController
 public class JoueurController {
 
-    static ArrayList<Case> getJoueurResponse()
+    @Autowired
+    Joueur joueur;
+
+    static ArrayList<Placement> getJoueurResponse()
     {
         String MainDuJoueur = "axbfrhl";
-        ArrayList<Case> List = new ArrayList<>();
-        Case center = new Case(5);
-        center.setX(6);
-        center.setY(7);
-        center.setValeur(MainDuJoueur.charAt(0));
+        ArrayList<Placement> List = new ArrayList<>();
+        Placement center = new Placement(MainDuJoueur.charAt(0), 6, 7);
         List.add(center);
         for (int i = 1; i < 3; i++) {
-            Case c = new Case(0);
-            c.setX(center.getX()+i);
-            c.setY(center.getY());
-            c.setValeur(MainDuJoueur.charAt(i));
+            Placement c = new Placement(MainDuJoueur.charAt(i), center.getX()+i, center.getY());
             List.add(c);
         }
         return List;
     }
 
-    @GetMapping("/jouer")
-    public PayloadJoueur jouer(){
+    @PostMapping("/jouer")
+    public PayloadJoueur jouer(@RequestBody PartieToJoueur message) {
         return new PayloadJoueur(getJoueurResponse());
     }
 }

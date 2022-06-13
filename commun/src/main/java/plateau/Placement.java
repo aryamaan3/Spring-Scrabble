@@ -17,4 +17,9 @@ public class Placement {
     public int getY(){
         return this.y;
     }
+
+    public Character getLettre()
+    {
+        return this.lettre;
+    }
 }

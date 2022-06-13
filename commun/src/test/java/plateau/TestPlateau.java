@@ -10,13 +10,13 @@ public class TestPlateau {
     private List<List<Case>> pT;
     Plateau pLT = new Plateau();
 
-    @Test
+    /*@Test
     public void testSetGetPlateau(){
         pT = PlateauFactory.creerPlateau();
         pLT.setPlateau(pT);
         System.out.println(pT.toString());
         assertEquals(pT,pLT.getPlateau());
-    }
+    }*/
 
 
 }

@@ -10,14 +10,19 @@ public class JoueurConsumer {
 
     static final String urlAppariement = "http://localhost:8082";
     static final String myUrl = "localhost:8081";
+    static final String kHttp = "http://";
+    //TODO : get id from dockerfile
     private static final int myId = 1;
-    private final WebClient client;
+    private final WebClient.Builder builder;
 
-    public JoueurConsumer(WebClient.Builder builder) {
-        this.client = builder.baseUrl(urlAppariement).build();
+    public JoueurConsumer(WebClient.Builder builder)
+    {
+        this.builder = builder;
     }
 
-    void subscribe() {
+    void subscribe()
+    {
+        WebClient client = builder.baseUrl(urlAppariement).build();
         client.get()
                 .uri("/findPartie/"+myId+"/"+myUrl)
                 .accept(MediaType.APPLICATION_JSON)

@@ -1,12 +1,13 @@
 package partie;
 
+import data.PartieToJoueur;
+import data.PayloadJoueur;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import plateau.Case;
-import plateau.Plateau;
+import plateau.Placement;
 
 
 import java.util.ArrayList;
@@ -23,20 +24,14 @@ public class TestPartie
     @MockBean
     PartieConsumer partieConsumer;
 
-    static ArrayList<Case> getJoueurResponse()
+    static ArrayList<Placement> getJoueurResponse()
     {
         String MainDuJoueur = "axbfrhl";
-        ArrayList<Case> List = new ArrayList<>();
-        Case center = new Case(5);
-        center.setX(6);
-        center.setY(7);
-        center.setValeur(MainDuJoueur.charAt(0));
+        ArrayList<Placement> List = new ArrayList<>();
+        Placement center = new Placement(MainDuJoueur.charAt(0), 6, 7);
         List.add(center);
         for (int i = 1; i < 3; i++) {
-            Case c = new Case(0);
-            c.setX(center.getX()+i);
-            c.setY(center.getY());
-            c.setValeur(MainDuJoueur.charAt(i));
+            Placement c = new Placement(MainDuJoueur.charAt(i), center.getX()+i, center.getY());
             List.add(c);
         }
         return List;
@@ -56,7 +51,7 @@ public class TestPartie
         urls.add("test");
         Partie p = new Partie();
         p.linker = partieConsumer;
-        when(partieConsumer.jouer(anyString(), any(Plateau.class), anyString())).thenReturn(getJoueurResponse());
+        when(partieConsumer.jouer(anyString(), any(PartieToJoueur.class))).thenReturn(new PayloadJoueur(getJoueurResponse()));
         p.setJoueurs(j, urls);
     }
     
