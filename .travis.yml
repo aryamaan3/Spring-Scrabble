@@ -29,16 +29,7 @@ script:
   #- mvn exec:java -Dexec.args="closingAtTheEnd" &
   #- cd ../joueur
   #- mvn exec:java
-  - mvn test
-  - cd appariement
-  - mvn exec:java &
-  - cd ../joueur
-  - mvn exec:java &
-  - cd ../partie
-  - mvn exec:java &
-  - cd ../anagrammeur
-  - mvn exec:java &
-  - cd ..
+  # construction des dockers
 
   - docker build anagrammeur -t scrabble:anagrammeur
   - docker build appariement -t scrabble:appariement
@@ -53,4 +44,15 @@ script:
   - docker run -d --name appariement_test scrabble:appariement
   - docker run -d --name partie_test scrabble:partie
   - docker-compose up --scale joueur=4
+
+  - mvn test
+  - cd appariement
+  - mvn exec:java &
+  - cd ../joueur
+  - mvn exec:java &
+  - cd ../partie
+  - mvn exec:java &
+  - cd ../anagrammeur
+  - mvn exec:java &
+  - cd ..
 
