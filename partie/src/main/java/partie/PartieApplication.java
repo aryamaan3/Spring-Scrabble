@@ -14,13 +14,11 @@ public class PartieApplication {
     }
 
     @Bean
-    public CommandLineRunner init(@Autowired PartieConsumer app) {
-        return args -> {
+    public CommandLineRunner init(@Autowired PartieConsumer app)
+    {
+        return args ->
+        {
             app.subscribe();
         };
     }
-
-    /*sabonnerAPArtie{
-
-    }*/
 }

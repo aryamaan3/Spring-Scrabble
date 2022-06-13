@@ -80,7 +80,7 @@ public class Anagrammeur {
      * @param lettres
      * @return
      */
-    ArrayList<String> getMotPossible(String lettres){
+    public ArrayList<String> getMotPossible(String lettres){
         //Trouve les mots possible par rapport au lettres 1 er tour
         motsPossibles = new ArrayList<>();
         List<String> lettresSplit = new ArrayList<String>(Arrays.asList(lettres.split("")));
