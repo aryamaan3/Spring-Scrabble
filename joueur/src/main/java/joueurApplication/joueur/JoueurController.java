@@ -14,14 +14,13 @@ public class JoueurController {
     @Autowired
     Joueur joueur;
 
-    static ArrayList<Placement> getJoueurResponse()
+    static ArrayList<Placement> getJoueurResponse(String main)
     {
-        String MainDuJoueur = "axbfrhl";
         ArrayList<Placement> List = new ArrayList<>();
-        Placement center = new Placement(MainDuJoueur.charAt(0), 6, 7);
+        Placement center = new Placement(main.charAt(0), 6, 7);
         List.add(center);
         for (int i = 1; i < 3; i++) {
-            Placement c = new Placement(MainDuJoueur.charAt(i), center.getX()+i, center.getY());
+            Placement c = new Placement(main.charAt(i), center.getX()+i, center.getY());
             List.add(c);
         }
         return List;
@@ -29,6 +28,6 @@ public class JoueurController {
 
     @PostMapping("/jouer")
     public PayloadJoueur jouer(@RequestBody PartieToJoueur message) {
-        return new PayloadJoueur(getJoueurResponse());
+        return new PayloadJoueur(getJoueurResponse(message.getMain()));
     }
 }
