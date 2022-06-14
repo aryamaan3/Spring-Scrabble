@@ -1,10 +1,11 @@
-package plateau;
+package factory;
 
 import org.testng.annotations.Test;
+import plateau.Case;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.testng.AssertJUnit.assertEquals;
 
 public class TestPlateauFactory {
     private List<List<Case>> pT;

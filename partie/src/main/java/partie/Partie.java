@@ -1,8 +1,10 @@
 package partie;
 
+import data.PartieToJoueur;
+import factory.PlateauFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import plateau.Case;
+import plateau.Placement;
 import plateau.Plateau;
 import plateau.PointLettre;
 
@@ -12,12 +14,10 @@ import java.util.stream.Collectors;
 @Component
 public class Partie {
     ArrayList<Integer> joueurs = new ArrayList<>();
-    //TODO : peut etre à remplacer par des classes ?
     HashMap<Integer, String> joueursUrls = new HashMap<>();
     Map<Integer, Integer> joueurPoints = new TreeMap<>();
     HashMap<Integer, Queue<Character>> main = new HashMap<>();
-    Plateau board = new Plateau();
-    int winnerId = 0;
+    Plateau board = new Plateau(PlateauFactory.creerPlateau());
     static final int kTailleMain = 7;
     static final String kRepiocheMot = "imout";
     private static final String kHttp = "http://";
@@ -37,12 +37,16 @@ public class Partie {
         lancerPartie();
     }
 
-    ArrayList<Case> appelJoueur(int id)
+    ArrayList<Placement> appelJoueur(int id)
     {
         String url = joueursUrls.get(id);
-        return linker.jouer(kHttp + url, board, getMain(id));
 
-        //return linker.jouerTest(board, getMain(id));
+        return linker.jouer(kHttp + url, new PartieToJoueur(board, getMain(id))).getPayloadJoueur();
+    }
+
+    public Plateau getBoard()
+    {
+        return this.board;
     }
 
     /**
@@ -84,12 +88,12 @@ public class Partie {
         return demandeJouer(id);
     }
 
-    String caseToString(ArrayList<Case> listCase)
+    String caseToString(ArrayList<Placement> listCase)
     {
         StringBuilder mot = new StringBuilder();
-        for (Case aCase : listCase)
+        for (Placement aCase : listCase)
         {
-            mot.append(aCase.getValeur());
+            mot.append(aCase.getLettre());
         }
         return mot.toString();
     }
@@ -98,11 +102,11 @@ public class Partie {
      * On place le mot sur le plateau
      * @param mot choisi par le joueurApplication.joueur
      */
-    void placerMot(ArrayList<Case> mot)
+    void placerMot(ArrayList<Placement> mot)
     {
-        for (Case aCase : mot)
+        for (Placement aCase : mot)
         {
-            board.setCase(aCase.getX(), aCase.getY(), aCase.getValeur());
+            board.setCase(aCase.getX(), aCase.getY(), aCase.getLettre());
         }
     }
 
@@ -112,12 +116,12 @@ public class Partie {
      * @param id du joueurApplication.joueur
      * @param mot placé par le joueurApplication.joueur
      */
-    void attribuerPoints(int id, ArrayList<Case> mot) //TODO : String à remplacer par Lettre
+    void attribuerPoints(int id, ArrayList<Placement> mot) //TODO : String à remplacer par Lettre
     {
         int points = 0;
-        for (Case lettre : mot)
+        for (Placement lettre : mot)
         {
-            points += PointLettre.valueOf(lettre.getValeur().toString().toUpperCase()).value;
+            points += PointLettre.valueOf(lettre.getLettre().toString().toUpperCase()).value;
         }
         joueurPoints.put(id, joueurPoints.get(id) + points);
     }
@@ -222,12 +226,11 @@ public class Partie {
     private Map<Integer, Integer> sortByValue(Map<Integer, Integer> map)
     {
         //sort tree map by value
-        Map<Integer, Integer> sortedMap = map.entrySet().stream()
+
+        return map.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                         (oldValue, newValue) -> oldValue, LinkedHashMap::new));
-
-        return sortedMap;
     }
 
 
@@ -242,7 +245,7 @@ public class Partie {
         // reverse iterate on keys
         for (int i = keys.size() - 1; i >= 0; i--)
         {
-            output.append("Joueur " + (i + 1) + " - " + this.joueurPoints.get(keys.get(i)) + "\n");
+            output.append("Joueur ").append(i + 1).append(" - ").append(this.joueurPoints.get(keys.get(i))).append("\n");
         }
 
         return output.toString();
