@@ -17,6 +17,7 @@ public class Partie {
     HashMap<Integer, String> joueursUrls = new HashMap<>();
     Map<Integer, Integer> joueurPoints = new TreeMap<>();
     HashMap<Integer, Queue<Character>> main = new HashMap<>();
+    Pioche pioche = new Pioche();
     Plateau board = new Plateau(PlateauFactory.creerPlateau());
     static final int kTailleMain = 7;
     static final String kRepiocheMot = "imout";
@@ -168,7 +169,7 @@ public class Partie {
         {
             while (this.main.get(id).size() != kTailleMain) {
                 // TODO : add.(new Lettre(getRandomLetter)) quand Lettre est crée
-                this.main.get(id).add(getRandomLetter());
+                this.main.get(id).add(pioche.piocher());
             }
         }
     }
@@ -183,7 +184,7 @@ public class Partie {
         Queue<Character> main = new LinkedList<>();
         for (int i = 0; i < kTailleMain; i++)
         {
-            main.add(getRandomLetter());
+            main.add(pioche.piocher());
         }
         return main;
     }
