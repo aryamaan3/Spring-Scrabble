@@ -1,5 +1,7 @@
 package anagrammeur;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import plateau.Case;
 import plateau.Plateau;
 
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Component
 public class Anagrammeur {
 
     private ArrayList<String> dictionnaire;
@@ -93,69 +96,5 @@ public class Anagrammeur {
         }
         return motsPossibles;
     }
-
-
-    /*ArrayList<Case> getPositionMot(String lettres){
-        ArrayList<Case> resu = new ArrayList<>();
-
-        //PREMIER TOUR!!!
-        //Premier mot trouvé
-        if(posedCases.size() == 0){
-            String motPossible = getMotPossible(lettres).get(0);
-            Case centre = plateau.getCentre();
-            int xCentre = centre.getX();
-            int yCentre = centre.getY();
-
-            for (int i=0 ; i<motPossible.length() ; i++){
-                if(i==0){
-                    centre.setValeur(motPossible.charAt(i));
-                    resu.add(centre);
-                }
-                else{
-                    plateau.getCase(xCentre + i, yCentre).setValeur(motPossible.charAt(i));
-                    resu.add(plateau.getCase(xCentre + i, yCentre));
-                }
-            }
-        }
-        else {
-            posedCases.forEach((caseRemplie) -> {
-                char valPlateau = caseRemplie.getValeur();
-                String temp = lettres+valPlateau;
-                ArrayList<String> motsPossibles = getMotPossible(temp);
-                for(int i = 0; i<motsPossibles.size();i++){
-                    if(caseRemplie.getX()+motsPossibles.get(i).length()<plateau.getLongeur() && plateau.getCase(caseRemplie.getX()+1, caseRemplie.getY()).isEmpty()){
-                        // ajouter les lettres
-                    }
-                    if(caseRemplie.getX()-motsPossibles.get(i).length()>0 && plateau.getCase(caseRemplie.getX()-1, caseRemplie.getY()).isEmpty()){
-                        // ajouter les lettres
-                    }
-                    if(caseRemplie.getY()+motsPossibles.get(i).length()<plateau.getLargeur() && plateau.getCase(caseRemplie.getX(), caseRemplie.getY()+1).isEmpty()){
-                        // ajouter les lettres
-                    }
-                    if(caseRemplie.getX()-motsPossibles.get(i).length()>0 && plateau.getCase(caseRemplie.getX()+1, caseRemplie.getY()-1).isEmpty()){
-                        // ajouter les lettres
-                    }
-                }
-                for (int i = 0; i<motsPossibles.size(); i++){
-                    int position = motsPossibles.get(i).indexOf(valPlateau);
-                    String beforePos = motsPossibles.get(i).substring(0, position);
-                    String afterPos = motsPossibles.get(i).substring(position, motsPossibles.get(i).length());
-                    for(int j = 0; j<motsPossibles.get(i).length(); j++){
-                        //char val = motsPossibles.get(i).get(j);
-                    }
-                }
-            });
-        }
-
-
-        return resu;
-    }*/
-
-    /*private ArrayList<Case> trouveMotLettre(String lettres, Plateau plateau) throws IOException {
-        this.setPlateau(plateau);
-        initCasePose();
-        ArrayList<Case> cases = getPositionMot(lettres);
-        return cases;
-    }*/
 
 }
