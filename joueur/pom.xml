@@ -20,12 +20,6 @@
             <version>1</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>scrabble-td2-darpa_g</groupId>
-            <artifactId>anagrammeur</artifactId>
-            <version>1</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
     <parent>
@@ -35,7 +29,6 @@
     </parent>
 
 
-    <groupId>scrabble-td2-darpa_g</groupId>
     <artifactId>joueurApplication.joueur</artifactId>
     <version>1</version>
 
@@ -45,6 +38,11 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
