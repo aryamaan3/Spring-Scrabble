@@ -1,26 +1,37 @@
 package joueurApplication.joueur;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import anagrammeur.Anagrammeur;
 import plateau.Case;
 import plateau.Placement;
 import plateau.Plateau;
-import plateau.PointLettre;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+@Component
 public class Joueur {
-    int id;
+    //int id;
 
-    public Joueur (int id)
+    @Autowired
+    JoueurConsumer linker;
+
+    /*public Joueur (int id)
     {
         this.id = id;
-    }
+    }*/
 
-    public int getId()
+    //TODO : get player id from dockerfile?
+
+    public Joueur(){}
+
+    /*public int getId()
     {
         return this.id;
-    }
+    }*/
+
 
     public String choisirMotPlusLong(ArrayList<String> listeDeMot){
         return Collections.max(listeDeMot, Comparator.comparing(s -> s.length()));
@@ -62,19 +73,19 @@ public class Joueur {
                 ArrayList<Case> colonne = plateau.getColonne(x);
                 for(int i = 0; i < colonne.size(); i++){
                     if(!colonne.get(i).isEmpty()){
-                       Case instanceCase = plateau.getCase(x,i);
-                       Character lettre = instanceCase.getValeur();
-                       for(String mot: listeMotsPossibles){
-                           try{
-                               int positionLettre = mot.indexOf(lettre);
-                               int firstY = i - positionLettre;
-                               return placeOnAxeX(mot,x,firstY);
-                           }
-                           catch (Throwable throwable){
+                        Case instanceCase = plateau.getCase(x,i);
+                        Character lettre = instanceCase.getValeur();
+                        for(String mot: listeMotsPossibles){
+                            try{
+                                int positionLettre = mot.indexOf(lettre);
+                                int firstY = i - positionLettre;
+                                return placeOnAxeX(mot,x,firstY);
+                            }
+                            catch (Throwable throwable){
                                 throwable.printStackTrace();
-                           }
+                            }
 
-                       }
+                        }
                     }
                 }
             }
@@ -82,8 +93,8 @@ public class Joueur {
         return null;
     }
 
-    public ArrayList<Placement> jouer (Plateau plateau, String main) {
-        ArrayList<String> listeMotsPossibles = new ArrayList<String>();
+    public ArrayList<Placement> jouer (Plateau plateau, String main, Anagrammeur anagrammeur) {
+        ArrayList<String> listeMotsPossibles = anagrammeur.getMotPossible(main);
         ArrayList<Placement> choix;
         boolean firstMove = true;
         if(firstMove){
@@ -93,5 +104,4 @@ public class Joueur {
         else choix = findVerticalWord(listeMotsPossibles,plateau);
         return choix;
     }
-
 }

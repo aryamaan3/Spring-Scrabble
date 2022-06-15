@@ -11,7 +11,7 @@ public class TestJoueur {
     ArrayList<Character> random = new ArrayList<>();
     @Test
     public void Testjouer() {
-        joueursT.add(new Joueur(1));
+        joueursT.add(new Joueur());
         idJoueursT.add(1);
         random.add('S');
         random.add('L');

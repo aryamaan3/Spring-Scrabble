@@ -19,7 +19,6 @@ public class PartieController
     public Message initPartie(@RequestParam(required = false) String val, @PathVariable("id1") int id, @PathVariable("url1") String playerUrl)
     {
         Message g = new Message("id = " + id + ", url = " + playerUrl);
-        System.out.println("initPartie called, " + id + ", url = " + playerUrl);
         ArrayList<Integer> j = new ArrayList<>();
         j.add(id);
         ArrayList<String> urls = new ArrayList<>();
