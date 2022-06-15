@@ -1,6 +1,7 @@
 package partie;
 
 import data.PartieToJoueur;
+import data.PlayerDetails;
 import factory.PlateauFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class Partie {
+public class Partie
+{
     ArrayList<Integer> joueurs = new ArrayList<>();
     HashMap<Integer, String> joueursUrls = new HashMap<>();
     Map<Integer, Integer> joueurPoints = new TreeMap<>();
@@ -33,21 +35,22 @@ public class Partie {
     {
         this.joueurs = joueurs;
         this.joueursUrls.clear();
-        //TODO : loop on urls and set in hashmap instead of hardcoding 1st player
-        this.joueursUrls.put(joueurs.get(0), urls.get(0));
+        for (int i = 0; i < urls.size(); i++)
+        {
+            this.joueursUrls.put(joueurs.get(i), urls.get(i));
+        }
         lancerPartie();
+    }
+
+    void setJoueurs(PlayerDetails playerData)
+    {
+        setJoueurs(playerData.getIds(), playerData.getUrls());
     }
 
     ArrayList<Placement> appelJoueur(int id)
     {
         String url = joueursUrls.get(id);
-
         return linker.jouer(kHttp + url, new PartieToJoueur(board, getMain(id))).getPayloadJoueur();
-    }
-
-    public Plateau getBoard()
-    {
-        return this.board;
     }
 
     /**
@@ -116,31 +119,35 @@ public class Partie {
         var s = q.size();
         int cnt = 0;
 
-        while (!q.isEmpty() && q.peek() != c) {
+        while (!q.isEmpty() && q.peek() != c)
+        {
             ref.add(q.peek());
             q.remove();
             cnt++;
         }
 
-        if (q.isEmpty()) {
-            while (!ref.isEmpty()) {
+        if (q.isEmpty())
+        {
+            while (!ref.isEmpty())
+            {
                 // Pushing all the elements back into q
                 q.add(ref.peek());
                 ref.remove();
             }
         }
 
-        else {
+        else
+        {
             q.remove();
-            while (!ref.isEmpty()) {
-
+            while (!ref.isEmpty())
+            {
                 // Pushing all the elements back into q
                 q.add(ref.peek());
                 ref.remove();
             }
             var k = s - cnt - 1;
-            while (k-- >0) {
-
+            while (k-- >0)
+            {
                 // Pushing elements from front of q to its back
                 var p = q.peek();
                 q.remove();
@@ -157,7 +164,6 @@ public class Partie {
      */
     void placerMot(ArrayList<Placement> mot)
     {
-        //TODO : remove letter from main of joueur
         for (Placement aCase : mot)
         {
             board.setCase(aCase.getX(), aCase.getY(), aCase.getLettre());
@@ -170,7 +176,7 @@ public class Partie {
      * @param id du joueurApplication.joueur
      * @param mot placé par le joueurApplication.joueur
      */
-    void attribuerPoints(int id, ArrayList<Placement> mot) //TODO : String à remplacer par Lettre
+    void attribuerPoints(int id, ArrayList<Placement> mot)
     {
         int points = 0;
         for (Placement lettre : mot)
@@ -202,17 +208,6 @@ public class Partie {
     }
 
     /**
-     * trouver une lettre au hasard depuis la banque des mots
-     * @return une lettre
-     */
-    private Character getRandomLetter()
-    {
-        //TODO : on devrait prendre une lettre disponible parmis une banque pre-établis
-        Random r = new Random();
-        return (char)(r.nextInt(26) + 'a');
-    }
-
-    /**
      * Rempli la main du joueurApplication.joueur
      * @param id du joueurApplication.joueur
      */
@@ -221,7 +216,6 @@ public class Partie {
         if (this.main.get(id).size() != kTailleMain)
         {
             while (this.main.get(id).size() != kTailleMain) {
-                // TODO : add.(new Lettre(getRandomLetter)) quand Lettre est crée
                 this.main.get(id).add(pioche.piocher());
             }
         }
@@ -229,10 +223,9 @@ public class Partie {
 
     /**
      * Initialise la main du joueurApplication.joueur
-     * @param id du joueurApplication.joueur
      * @return Main du joueurApplication.joueur
      */
-    Queue<Character> initMain(int id)
+    Queue<Character> initMain()
     {
         Queue<Character> main = new LinkedList<>();
         for (int i = 0; i < kTailleMain; i++)
@@ -250,7 +243,7 @@ public class Partie {
     {
         for (Integer id : this.joueurs)
         {
-            this.main.put(id, initMain(id));
+            this.main.put(id, initMain());
             this.joueurPoints.put(id, 0);
         }
     }
