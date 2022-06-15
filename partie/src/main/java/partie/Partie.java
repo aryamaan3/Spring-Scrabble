@@ -72,6 +72,7 @@ public class Partie {
      */
     String demandeJouer(int id)
     {
+        fillMain(id);
         var motChoisie = appelJoueur(id);
         var mot = caseToString(motChoisie);
         if (Objects.equals(mot, kRepiocheMot))
@@ -80,6 +81,7 @@ public class Partie {
         }
         if (verifierMot(mot))
         {
+            updateMain(id, mot);
             placerMot(motChoisie);
             attribuerPoints(id, motChoisie);
             return mot;
@@ -99,12 +101,63 @@ public class Partie {
         return mot.toString();
     }
 
+    void updateMain(int id, String mot)
+    {
+        for (Character c : mot.toCharArray())
+        {
+            removeFromMain(id, c);
+        }
+    }
+
+    void removeFromMain(int id, Character c)
+    {
+        Queue<Character> ref = new LinkedList<>();
+        var q = this.main.get(id);
+        var s = q.size();
+        int cnt = 0;
+
+        while (!q.isEmpty() && q.peek() != c) {
+            ref.add(q.peek());
+            q.remove();
+            cnt++;
+        }
+
+        if (q.isEmpty()) {
+            while (!ref.isEmpty()) {
+                // Pushing all the elements back into q
+                q.add(ref.peek());
+                ref.remove();
+            }
+        }
+
+        else {
+            q.remove();
+            while (!ref.isEmpty()) {
+
+                // Pushing all the elements back into q
+                q.add(ref.peek());
+                ref.remove();
+            }
+            var k = s - cnt - 1;
+            while (k-- >0) {
+
+                // Pushing elements from front of q to its back
+                var p = q.peek();
+                q.remove();
+                q.add(p);
+            }
+        }
+
+        this.main.put(id, q);
+    }
+
     /**
      * On place le mot sur le plateau
      * @param mot choisi par le joueurApplication.joueur
      */
     void placerMot(ArrayList<Placement> mot)
     {
+        //TODO : remove letter from main of joueur
         for (Placement aCase : mot)
         {
             board.setCase(aCase.getX(), aCase.getY(), aCase.getLettre());

@@ -9,25 +9,15 @@ import java.util.List;
 public class PartieToJoueur
 {
     private Plateau board;
-    private List<Character> main;
+    private String main;
 
     public PartieToJoueur() {
-    }
-
-    public PartieToJoueur(Plateau board, List<Character> main)
-    {
-        this.board = board;
-        this.main = main;
     }
 
     public PartieToJoueur(Plateau board, String main)
     {
         this.board = board;
-        this.main = new ArrayList<>();
-        for (char c : main.toCharArray())
-        {
-            this.main.add(c);
-        }
+        this.main = main;
     }
 
     public void setBoard(Plateau board)
@@ -35,7 +25,7 @@ public class PartieToJoueur
         this.board = board;
     }
 
-    public void setMain(List<Character> main)
+    public void setMain(String main)
     {
         this.main = main;
     }
@@ -45,7 +35,7 @@ public class PartieToJoueur
         return board;
     }
 
-    public List<Character> getMain()
+    public String getMain()
     {
         return main;
     }
