@@ -1,9 +1,11 @@
 package appariement;
 
 import data.Message;
+import data.PlayerDetails;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Component
 public class AppariementConsumer
@@ -14,12 +16,13 @@ public class AppariementConsumer
         this.builder = builder;
     }
 
-    void creerPartie(String partieUrl, int joueurId, String joueurUrl)
+    void creerPartie(String partieUrl, PlayerDetails playerData)
     {
         WebClient client = builder.baseUrl(partieUrl).build();
-        client.get()
-                .uri("/initPartie/"+joueurId+"/"+joueurUrl)
+        client.post()
+                .uri("/initPartie")
                 .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(playerData), PlayerDetails.class)
                 .retrieve()
                 .bodyToMono(Message.class)
                 .map(Message::getMessage)
