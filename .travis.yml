@@ -40,9 +40,9 @@ script:
   # Précision des ports pas utile ?
   #- docker run -d --name anagrammeur_test -e PORT="8080" -e LANCEMENT="POUR_LES_TEST" -p 8084:8084 scrabble:anagrammeur
 
-  - docker run -d --name anagrammeur_test scrabble:anagrammeur
-  - docker run -d --name appariement_test scrabble:appariement
-  - docker run -d --name partie_test scrabble:partie
+  #- docker run -d --name anagrammeur_test scrabble:anagrammeur
+  #- docker run -d --name appariement_test scrabble:appariement
+  #- docker run -d --name partie_test scrabble:partie
   - docker-compose up --scale joueur=4
 
   - mvn test
