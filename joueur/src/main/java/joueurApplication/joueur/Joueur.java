@@ -1,6 +1,5 @@
 package joueurApplication.joueur;
 
-import anagrammeur.Anagrammeur;
 import plateau.Case;
 import plateau.Placement;
 import plateau.Plateau;
@@ -83,8 +82,8 @@ public class Joueur {
         return null;
     }
 
-    public ArrayList<Placement> jouer (Plateau plateau, String main, Anagrammeur anagrammeur) {
-        ArrayList<String> listeMotsPossibles = anagrammeur.getMotPossible(main);
+    public ArrayList<Placement> jouer (Plateau plateau, String main) {
+        ArrayList<String> listeMotsPossibles = new ArrayList<String>();
         ArrayList<Placement> choix;
         boolean firstMove = true;
         if(firstMove){
