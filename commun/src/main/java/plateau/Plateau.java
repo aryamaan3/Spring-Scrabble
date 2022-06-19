@@ -8,6 +8,7 @@ public class Plateau
     private List<List<Case>> plateau;
     private final int longeur;
     private final int largeur;
+    private static final int kCenter = 7;
 
     public Plateau()
     {
@@ -32,42 +33,44 @@ public class Plateau
         this.plateau = plateau;
     }
 
-    public int getLargeur() {
+    public int getLargeur()
+    {
         return largeur;
     }
 
-    public int getLongeur() {
+    public int getLongeur()
+    {
         return longeur;
     }
 
-    public Case getCentre(){
-        for (int i = 0; this.plateau.size()<i; i++){
-            for (int j= 0; this.plateau.get(i).size()<j; j++){
-                if(this.plateau.get(i).get(j).getType() == TypeDeCase.CENTER){
-                    return this.plateau.get(i).get(j);
-                }
-            }
-        }
-        return null;
+    public Case getCentre()
+    {
+        return getCase(kCenter, kCenter);
     }
 
-    public Case getCase(int x, int y){
+    public Case getCase(int x, int y)
+    {
         return this.plateau.get(y).get(x);
     }
 
-    public ArrayList<Case> getPosedCase(){
+    //TODO : @geoffreylalic à verifier si ça marche
+    public ArrayList<Case> getPosedCase()
+    {
         ArrayList<Case> cases = new ArrayList<>();
-        for (int i = 0; this.plateau.size()<i; i++){
-            for (int j= 0; this.plateau.get(i).size()<j; j++){
-                if(!this.plateau.get(i).get(j).isEmpty()){
-                    cases.add(this.plateau.get(i).get(j));
+        for (var aCol : this.plateau)
+        {
+            for (var aCase : aCol)
+            {
+                if(!aCase.isEmpty()){
+                    cases.add(aCase);
                 }
             }
         }
         return cases;
     }
 
-    public ArrayList<Case> getLigne(int y){
+    public ArrayList<Case> getLigne(int y)
+    {
         ArrayList<Case> ligne = new ArrayList<>();
         for(int i = 0 ; i<getLongeur() ; i++){
             ligne.add(plateau.get(y).get(i));
@@ -75,7 +78,8 @@ public class Plateau
         return ligne;
     }
 
-    public ArrayList<Case> getColonne(int x){
+    public ArrayList<Case> getColonne(int x)
+    {
         ArrayList<Case> colonne = new ArrayList<>();
         for(int i = 0 ; i<getLongeur() ; i++){
             colonne.add(plateau.get(i).get(x));
@@ -83,7 +87,8 @@ public class Plateau
         return colonne;
     }
 
-    public int getNumberOfLettersPlacedOnColumn(int numCol){
+    public int getNumberOfLettersPlacedOnColumn(int numCol)
+    {
         ArrayList<Case> colonne = getColonne(numCol);
         int nbLetters = 0;
         for(Case lettre: colonne){
@@ -98,7 +103,8 @@ public class Plateau
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         StringBuilder output = new StringBuilder();
         for (List<Case> aLine : this.plateau)
         {

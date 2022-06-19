@@ -47,21 +47,20 @@ public class Partie
         setJoueurs(playerData.getIds(), playerData.getUrls());
     }
 
-    ArrayList<Placement> appelJoueur(int id)
+    ArrayList<Placement> appelJoueur(String url, String main)
     {
-        String url = joueursUrls.get(id);
-        return linker.jouer(kHttp + url, new PartieToJoueur(board, getMain(id))).getPayloadJoueur();
+        return linker.jouer(kHttp + url, new PartieToJoueur(board, main)).getPayloadJoueur();
     }
 
     /**
      * Transfome la queue de char en String pour l'envoi au
      * Joueur
-     * @param id du joueurApplication.joueur
+     * @param main du joueurApplication.joueur
      * @return La main du joueurApplication.joueur
      */
-    String getMain(int id)
+    String getMain(Queue<Character> main)
     {
-        return this.main.get(id).stream()
+        return main.stream()
                 .map(Object::toString)
                 .reduce((acc, e) -> acc + e)
                 .get();
@@ -76,7 +75,7 @@ public class Partie
     String demandeJouer(int id)
     {
         fillMain(id);
-        var motChoisie = appelJoueur(id);
+        var motChoisie = appelJoueur(joueursUrls.get(id), getMain(main.get(id)));
         var mot = caseToString(motChoisie);
         if (Objects.equals(mot, kRepiocheMot))
         {
@@ -86,7 +85,7 @@ public class Partie
         {
             updateMain(id, mot);
             placerMot(motChoisie);
-            attribuerPoints(id, motChoisie);
+            joueurPoints.put(id, joueurPoints.get(id) + attribuerPoints(motChoisie));
             return mot;
         }
         // Si verifieMot renvoie false refaire tous le process avec appelJoueur
@@ -108,14 +107,13 @@ public class Partie
     {
         for (Character c : mot.toCharArray())
         {
-            removeFromMain(id, c);
+            this.main.put(id, removeFromMain(this.main.get(id), c));
         }
     }
 
-    void removeFromMain(int id, Character c)
+    Queue<Character> removeFromMain(Queue<Character> q, Character c)
     {
         Queue<Character> ref = new LinkedList<>();
-        var q = this.main.get(id);
         var s = q.size();
         int cnt = 0;
 
@@ -155,7 +153,7 @@ public class Partie
             }
         }
 
-        this.main.put(id, q);
+        return q;
     }
 
     /**
@@ -173,17 +171,17 @@ public class Partie
     /**
      * Ajoute les points obtenus grace au mot placé
      * au score du joueurApplication.joueur
-     * @param id du joueurApplication.joueur
      * @param mot placé par le joueurApplication.joueur
      */
-    void attribuerPoints(int id, ArrayList<Placement> mot)
+    int attribuerPoints(ArrayList<Placement> mot)
     {
         int points = 0;
         for (Placement lettre : mot)
         {
             points += PointLettre.valueOf(lettre.getLettre().toString().toUpperCase()).value;
         }
-        joueurPoints.put(id, joueurPoints.get(id) + points);
+
+        return points;
     }
 
     /**
@@ -253,14 +251,11 @@ public class Partie
         return this.joueurPoints.get(id);
     }
 
-    boolean isGameOn()
+    boolean isGameOn(ArrayList<Integer> joueurs, Map<Integer, Integer> joueurPoints)
     {
-        //sort joueursPoints by value
-        this.joueurPoints = sortByValue(joueurPoints);
-
         for (int id : joueurs)
         {
-            if (joueurPoints.get(id) > 50)
+            if (joueurPoints.get(id) >= 50)
             {
                 return false;
             }
@@ -270,7 +265,7 @@ public class Partie
 
     }
 
-    private Map<Integer, Integer> sortByValue(Map<Integer, Integer> map)
+    Map<Integer, Integer> sortByValue(Map<Integer, Integer> map)
     {
         //sort tree map by value
 
@@ -298,17 +293,10 @@ public class Partie
         return output.toString();
     }
 
-    List<Integer> getWinners()
+    int getWinners(Map<Integer, Integer> joueurPoints)
     {
-        List<Integer> winners = new ArrayList<>();
-        for (int id : joueurs)
-        {
-            if (joueurPoints.get(id) > 50)
-            {
-                winners.add(id);
-            }
-        }
-        return winners;
+        List<Integer> keys = new ArrayList<>(joueurPoints.keySet());
+        return keys.get(keys.size() - 1);
     }
 
     /**
@@ -321,7 +309,8 @@ public class Partie
         System.out.println("Il y a " + joueurs.size() + " joueurs");
         System.out.println("------------------------------------");
         int round = 1;
-        while (isGameOn())
+        this.joueurPoints = sortByValue(this.joueurPoints);
+        while (isGameOn(this.joueurs, this.joueurPoints))
         {
             //if (round == 3) loop = false;
             System.out.println("Starting round : " + round);
@@ -337,6 +326,6 @@ public class Partie
             System.out.println(classement());
         }
         System.out.println("-----------------Fin----------------");
-        System.out.println("Le[s] gagnant[s] : " + getWinners());
+        System.out.println("Le[s] gagnant[s] : " + getWinners(this.joueurPoints));
     }
 }
