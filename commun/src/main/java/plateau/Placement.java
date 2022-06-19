@@ -1,8 +1,10 @@
 package plateau;
 
-public class Placement {
-    private char lettre;
-    private int x, y;
+public class Placement
+{
+    private final char lettre;
+    private final int x;
+    private final int y;
 
     public Placement(char lettre, int x, int y){
         this.lettre = lettre;
