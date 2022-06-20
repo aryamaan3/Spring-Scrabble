@@ -58,7 +58,7 @@ public class Case {
 
     public boolean isEmpty()
     {
-        return this.valeur == ' ';
+        return this.valeur == Character.MIN_VALUE;
     }
 
     public Character getValeur()
