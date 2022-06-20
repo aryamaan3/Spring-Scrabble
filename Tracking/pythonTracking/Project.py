@@ -58,12 +58,12 @@ class Project:
         works = self.sum_workload_per_ressource()
         res += "{:40}{:40}".format("Resource:", "Workload:") + "\n"
         for key in works.keys():
-            res += "{:40}{:40}\n".format(key.id, str(works[key]))
+            res += "{:40}{:40}\n".format(key.id, str("%.2f" % works[key]))
         res += "\n\nSum of workload per task\n"
         work_task = self.sum_workload_per_task()
         res += "{:40}{:40}".format("Task:", "Workload:") + "\n"
         for key in work_task.keys():
-            res += "{:40}{:40}".format(key.id, str(work_task[key])) + "\n"
+            res += "{:40}{:40}".format(key.id, str("%.2f" % work_task[key])) + "\n"
             # res += key.id + " -> " + str(work_task[key]) + " j/h; \n "
         res += "\n"
 
