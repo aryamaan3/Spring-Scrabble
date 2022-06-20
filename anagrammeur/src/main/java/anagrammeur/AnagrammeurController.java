@@ -1,6 +1,6 @@
 package anagrammeur;
 
-import data.Message;
+import data.PayloadAnagrammeur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +16,12 @@ public class AnagrammeurController {
     Anagrammeur anagrammeur;
 
     @GetMapping("/getMotPossible/{lettres}")
-    public ArrayList<String> getMotPossible(@RequestParam(required = false) String val, @PathVariable("lettres") String lettres){
-        return anagrammeur.getMotPossible(lettres) ;
+    public PayloadAnagrammeur getMotPossible(@RequestParam(required = false) String val, @PathVariable("lettres") String lettres){
+        ArrayList<String> test = new ArrayList<>();
+        test.add("tache");
+        test.add("cheat");
+        //return new PayloadAnagrammeur(anagrammeur.getMotPossible(lettres)) ;
+        return new PayloadAnagrammeur(test) ;
+
     }
 }

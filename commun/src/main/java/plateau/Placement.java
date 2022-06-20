@@ -24,4 +24,13 @@ public class Placement
     {
         return this.lettre;
     }
+
+    @Override
+    public String toString() {
+        return "Placement{" +
+                "lettre=" + lettre +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

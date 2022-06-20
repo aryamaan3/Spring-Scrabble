@@ -25,8 +25,7 @@ public class Anagrammeur {
      * et place son contenu dans l'ArrayList dictionnaire
      */
     private void initialiseDictionnaire() throws IOException {
-        String fileName = "liste_francais.txt";
-        //String fileName = "./anagrammeur/liste_francais.txt";
+        String fileName = "anagrammeur/liste_francais.txt";
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {

@@ -12,24 +12,14 @@ import java.util.Comparator;
 
 @Component
 public class Joueur {
-    //int id;
+    boolean firstMove = true;
 
     @Autowired
     JoueurConsumer linker;
 
-    /*public Joueur (int id)
-    {
-        this.id = id;
-    }*/
-
     //TODO : get player id from dockerfile?
 
     public Joueur(){}
-
-    /*public int getId()
-    {
-        return this.id;
-    }*/
 
 
     public String choisirMotPlusLong(ArrayList<String> listeDeMot){
@@ -58,7 +48,7 @@ public class Joueur {
         int posY = 7;// la ligne du milieu
         String motChoisi = choisirMotPlusLong(listeMotsPossibles);
         int milieu = Math.round(((float) motChoisi.length())/2);
-        int firstPosX = milieu - motChoisi.length();
+        int firstPosX = 3;
         return placeOnAxeY(motChoisi, firstPosX, posY);
     }
 
@@ -93,9 +83,8 @@ public class Joueur {
     }
 
     public ArrayList<Placement> jouer (Plateau plateau, String main) {
-        ArrayList<String> listeMotsPossibles = new ArrayList<String>();
+        var listeMotsPossibles = linker.getMotPossible(main).getPayloadJoueur();
         ArrayList<Placement> choix;
-        boolean firstMove = true;
         if(firstMove){
             choix = firstPlacement(listeMotsPossibles);
             firstMove = false;

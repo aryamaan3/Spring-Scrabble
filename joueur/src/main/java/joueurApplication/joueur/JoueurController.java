@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 @RestController
 public class JoueurController {
-
     @Autowired
     Joueur joueur;
 
@@ -28,6 +27,6 @@ public class JoueurController {
 
     @PostMapping("/jouer")
     public PayloadJoueur jouer(@RequestBody PartieToJoueur message) {
-        return new PayloadJoueur(getJoueurResponse(message.getMain()));
+        return new PayloadJoueur(joueur.jouer(message.getBoard(), message.getMain()));
     }
 }
