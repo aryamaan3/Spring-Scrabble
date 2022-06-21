@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class AppariementConsumer
 {
+    private static final String kHttp = "http://";
     WebClient.Builder builder;
     public AppariementConsumer(WebClient.Builder builder)
     {
@@ -18,6 +19,7 @@ public class AppariementConsumer
 
     void creerPartie(String partieUrl, PlayerDetails playerData)
     {
+        System.out.println("trying on : " + partieUrl);
         WebClient client = builder.baseUrl(partieUrl).build();
         client.post()
                 .uri("/initPartie")

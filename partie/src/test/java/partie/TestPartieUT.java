@@ -26,11 +26,11 @@ public class TestPartieUT
 
     static ArrayList<Placement> getJoueurResponse()
     {
-        String MainDuJoueur = "axbfrhl";
+        String MainDuJoueur = "tacherr";
         ArrayList<Placement> List = new ArrayList<>();
         Placement center = new Placement(MainDuJoueur.charAt(0), 6, 7);
         List.add(center);
-        for (int i = 1; i < 3; i++) {
+        for (int i = 1; i < 5; i++) {
             Placement c = new Placement(MainDuJoueur.charAt(i), center.getX()+i, center.getY());
             List.add(c);
         }
@@ -41,11 +41,6 @@ public class TestPartieUT
     public void testPartie()
     {
         assertNotNull(partieConsumer);
-        ArrayList<Integer> j = new ArrayList<>();
-        j.add(1);
-        j.add(2);
-        j.add(3);
-        j.add(4);
         ArrayList<String> urls = new ArrayList<>();
         urls.add("test");
         urls.add("test");
@@ -54,7 +49,7 @@ public class TestPartieUT
         Partie p = new Partie();
         p.linker = partieConsumer;
         when(partieConsumer.jouer(anyString(), any(PartieToJoueur.class))).thenReturn(new PayloadJoueur(getJoueurResponse()));
-        p.setJoueurs(j, urls);
+        p.setJoueurs(urls);
     }
 
 }

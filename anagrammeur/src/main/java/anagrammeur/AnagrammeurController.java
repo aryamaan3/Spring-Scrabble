@@ -18,8 +18,7 @@ public class AnagrammeurController {
     @GetMapping("/getMotPossible/{lettres}")
     public PayloadAnagrammeur getMotPossible(@RequestParam(required = false) String val, @PathVariable("lettres") String lettres){
         ArrayList<String> test = new ArrayList<>();
-        test.add("tache");
-        test.add("cheat");
+        test.add("yakuzas");
         //return new PayloadAnagrammeur(anagrammeur.getMotPossible(lettres)) ;
         return new PayloadAnagrammeur(test) ;
 

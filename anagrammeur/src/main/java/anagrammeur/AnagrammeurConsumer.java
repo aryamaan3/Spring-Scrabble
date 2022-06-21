@@ -1,8 +1,6 @@
-package partie;
+package anagrammeur;
 
 import data.Message;
-import data.PartieToJoueur;
-import data.PayloadJoueur;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -12,9 +10,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 @Component
-public class PartieConsumer
+public class AnagrammeurConsumer
 {
     private static String myUrl = null;
+
     static
     {
         try
@@ -29,36 +28,23 @@ public class PartieConsumer
 
     private final WebClient.Builder builder;
 
-    public PartieConsumer(WebClient.Builder builder)
+    public AnagrammeurConsumer(WebClient.Builder builder)
     {
         this.builder = builder;
     }
 
-    void subscribe(String urlAppariement, int port, boolean isDocker)
+    void subscribe(String urlApp, int port, boolean isDocker)
     {
         String url = isDocker ? myUrl : "localhost";
-        System.out.println("isDocker : " + isDocker + ", app : " + urlAppariement + ", mine :" + url + ":" + port);
-        WebClient client = builder.baseUrl(urlAppariement).build();
+        System.out.println("isDocker : " + isDocker + ", app : " + urlApp + ", mine :" + url + ":" + port);
+        WebClient client = builder.baseUrl(urlApp).build();
         client.post()
-                .uri("/freePartie")
+                .uri("freeAnagrammeur")
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just("http://" + url + ":" + port), String.class)
                 .retrieve()
                 .bodyToMono(Message.class)
                 .map(Message::getMessage)
-                .block();
-    }
-
-    PayloadJoueur jouer(String url, PartieToJoueur messageToSend)
-    {
-        System.out.println("partie trying on : " + url);
-        WebClient client = builder.baseUrl(url).build();
-        return client.post()
-                .uri("/jouer")
-                .accept(MediaType.APPLICATION_JSON)
-                .body(Mono.just(messageToSend), PartieToJoueur.class)
-                .retrieve()
-                .bodyToMono(PayloadJoueur.class)
                 .block();
     }
 }

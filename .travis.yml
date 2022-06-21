@@ -2,9 +2,6 @@ language: java
 
 jdk:
   - openjdk17
-  
-env:
-  #- NB_JOUEURS=3
 
 cache:
   directories:
@@ -14,12 +11,12 @@ services:
   - docker
 
 install:
-  - mvn clean install -DskipTests
+  - mvn clean install -Dskiptest
 
 script:
   #- docker version
   #- echo "nb joueurs = $NB_JOUEURS "
-  #- mvn test
+  - mvn test
   #- docker build joueur -t scrabble:joueur
   #- cd moteur
   #- docker run -d --name joueur_test -e PORT="8081" -e LANCEMENT="POUR_LES_TEST" -p 8081:8081 scrabble:joueur
@@ -35,25 +32,14 @@ script:
   - docker build appariement -t scrabble:appariement
   - docker build partie -t scrabble:partie
   - docker build joueur -t scrabble:joueur
-  #- Lance les dockers
-
-  # Précision des ports pas utile ?
-  #- docker run -d --name anagrammeur_test -e PORT="8080" -e LANCEMENT="POUR_LES_TEST" -p 8084:8084 scrabble:anagrammeur
-
-  #- docker run -d --name anagrammeur_test scrabble:anagrammeur
-  #- docker run -d --name appariement_test scrabble:appariement
-  #- docker run -d --name partie_test scrabble:partie
   
   #- docker-compose up --scale joueur=4
 
-  - mvn test
-  - cd appariement
-  - mvn exec:java &
-  - cd ../joueur
-  - mvn exec:java &
-  - cd ../partie
-  - mvn exec:java &
-  - cd ../anagrammeur
-  - mvn exec:java &
-  - cd ..
+  - mvn exec:java -pl appariement &
+  - mvn exec:java -pl anagrammeur -Dserver.port=8081 -Dexec.args="http://localhost:8080/ false" &
+  - mvn exec:java -pl partie -Dserver.port=8082 -Dexec.args="http://localhost:8080/ false" &
+  - mvn exec:java -pl joueur -Dserver.port=8083 -Dexec.args="http://localhost:8080/ false" &
+  - mvn exec:java -pl joueur -Dserver.port=8084 -Dexec.args="http://localhost:8080/ false" &
+  - mvn exec:java -pl joueur -Dserver.port=8085 -Dexec.args="http://localhost:8080/ false" &
+  - mvn exec:java -pl joueur -Dserver.port=8086 -Dexec.args="http://localhost:8080/ false" &
 
