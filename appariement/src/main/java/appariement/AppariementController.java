@@ -2,10 +2,7 @@ package appariement;
 
 import data.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AppariementController
@@ -13,19 +10,36 @@ public class AppariementController
     @Autowired
     Appariement app;
 
-    @GetMapping("findPartie/{id}/{playerUrl}")
-    public Message findPartie(@RequestParam(required = false) String val, @PathVariable("id") int id, @PathVariable("playerUrl") String playerUrl)
+    @PostMapping("freeJoueur")
+    public Message freeJoueur(@RequestBody String url)
     {
-        Message g = new Message("id = " + id + ", url = " + playerUrl);
-        app.addJoueur(id, playerUrl);
+        System.out.println("player added");
+        Message g = new Message("Player added");
+        app.addJoueur(url);
         return g;
     }
 
-    @GetMapping("freePartie/{partieUrl}")
-    public Message freePartie(@RequestParam(required = false) String val, @PathVariable("partieUrl") String url)
+    @PostMapping("freePartie")
+    public Message freePartie(@RequestBody String url)
     {
-        Message g = new Message("url = " + url);
+        System.out.println("partie added");
+        Message g = new Message("Partie added");
         app.addPartie(url);
         return g;
+    }
+
+    @PostMapping("freeAnagrammeur")
+    public Message freeAnagrammeur(@RequestBody String url)
+    {
+        System.out.println("anagrammeur added");
+        Message g = new Message("Anagrammeur added");
+        app.addAnagrammeur(url);
+        return g;
+    }
+
+    @GetMapping("getFreeAnagrammeur")
+    public String getFreeAnagrammeur()
+    {
+        return app.getFreeAnagrammeur();
     }
 }

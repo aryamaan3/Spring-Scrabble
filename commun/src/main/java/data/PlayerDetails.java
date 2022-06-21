@@ -1,37 +1,25 @@
 package data;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerDetails
 {
-    private ArrayList<Integer> ids;
-    private ArrayList<String> urls;
+    private List<String> urls;
 
     public PlayerDetails()
     {}
 
-    public PlayerDetails(ArrayList<Integer> ids, ArrayList<String> urls)
+    public PlayerDetails(List<String> urls)
     {
-        this.ids = ids;
         this.urls = urls;
     }
 
-    public ArrayList<Integer> getIds()
-    {
-        return ids;
-    }
-
-    public ArrayList<String> getUrls()
+    public List<String> getUrls()
     {
         return urls;
     }
 
-    public void setIds(ArrayList<Integer> ids)
-    {
-        this.ids = ids;
-    }
-
-    public void setUrls(ArrayList<String> urls)
+    public void setUrls(List<String> urls)
     {
         this.urls = urls;
     }
@@ -40,7 +28,6 @@ public class PlayerDetails
     public String toString()
     {
         return "PlayerDetails{" +
-                "ids=" + ids +
                 "urls=" + urls +
                 '}';
     }

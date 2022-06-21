@@ -23,7 +23,6 @@ public class Partie
     Plateau board = new Plateau(PlateauFactory.creerPlateau());
     static final int kTailleMain = 7;
     static final String kRepiocheMot = "imout";
-    private static final String kHttp = "http://";
 
     @Autowired
     PartieConsumer linker;
@@ -31,25 +30,25 @@ public class Partie
     public Partie()
     {}
 
-    void setJoueurs(ArrayList<Integer> joueurs, ArrayList<String> urls)
+    void setJoueurs(List<String> urls)
     {
-        this.joueurs = joueurs;
         this.joueursUrls.clear();
-        for (int i = 0; i < urls.size(); i++)
+        for (int i = 1; i < urls.size() + 1; i++)
         {
-            this.joueursUrls.put(joueurs.get(i), urls.get(i));
+            this.joueurs.add(i);
+            this.joueursUrls.put(joueurs.get(i-1), urls.get(i-1));
         }
         lancerPartie();
     }
 
     void setJoueurs(PlayerDetails playerData)
     {
-        setJoueurs(playerData.getIds(), playerData.getUrls());
+        setJoueurs(playerData.getUrls());
     }
 
     ArrayList<Placement> appelJoueur(String url, String main)
     {
-        return linker.jouer(kHttp + url, new PartieToJoueur(board, main)).getPayloadJoueur();
+        return linker.jouer(url, new PartieToJoueur(board, main)).getPayloadJoueur();
     }
 
     /**
@@ -321,6 +320,11 @@ public class Partie
                 System.out.println("Le joueur " + id + " a choisi le mot : " + demandeJouer(id));
                 System.out.println("Ce mot vaut " + (getPoints(id) - pointsBefore) + " points");
             }
+            System.out.println("Voici le plateau apres ce round");
+            System.out.println("------------------------------------");
+            System.out.println("");
+            System.out.println(this.board);
+            System.out.println("------------------------------------");
             round ++;
             System.out.println("------------------------------------");
             System.out.println(classement());

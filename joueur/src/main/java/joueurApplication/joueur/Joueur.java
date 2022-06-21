@@ -83,7 +83,8 @@ public class Joueur {
     }
 
     public ArrayList<Placement> jouer (Plateau plateau, String main) {
-        var listeMotsPossibles = linker.getMotPossible(main).getPayloadJoueur();
+        var urlAnagrammeur = linker.getFreeAnagrammeur();
+        var listeMotsPossibles = linker.getMotPossible(main, urlAnagrammeur).getPayloadJoueur();
         ArrayList<Placement> choix;
         if(firstMove){
             choix = firstPlacement(listeMotsPossibles);

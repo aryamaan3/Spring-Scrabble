@@ -14,6 +14,9 @@ services:
     anagrammeur:
         image: scrabble:anagrammeur
         container_name: anagrammeur
+        environment:
+          - SERVER_IP=http://172.28.0.253:8080/
+          - IS_DOCKER=true
         networks:
           testing_net:
             ipv4_address: 172.28.0.252
@@ -24,19 +27,25 @@ services:
     partie:
         image: scrabble:partie
         container_name: partie
+        environment:
+          - SERVER_IP=http://172.28.0.253:8080/
+          - IS_DOCKER=true
         networks:
           testing_net:
             ipv4_address: 172.28.0.251
         depends_on :
-            - appariement
+            - anagrammeur
 
     joueur:
         image: scrabble:joueur
+        environment:
+          - SERVER_IP=http://172.28.0.253:8080/
+          - IS_DOCKER=true
         networks:
           testing_net:
             # ipv4_address: 172.28.0.253
         depends_on :
-            - appariement
+            - partie
 
 networks:
   testing_net:
