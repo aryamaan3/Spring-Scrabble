@@ -45,6 +45,7 @@ script:
   #- docker run -d --name partie_test scrabble:partie
   
   #- docker-compose up --scale joueur=4
+  - docker-compose up
 
   - mvn test
   - cd appariement
