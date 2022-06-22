@@ -32,7 +32,7 @@ script:
   - docker build appariement -t scrabble:appariement
   - docker build partie -t scrabble:partie
   - docker build joueur -t scrabble:joueur
-  
+
   #- docker-compose up --scale joueur=4
 
   - mvn exec:java -pl appariement &
@@ -42,4 +42,3 @@ script:
   - mvn exec:java -pl joueur -Dserver.port=8084 -Dexec.args="http://localhost:8080/ false" &
   - mvn exec:java -pl joueur -Dserver.port=8085 -Dexec.args="http://localhost:8080/ false" &
   - mvn exec:java -pl joueur -Dserver.port=8086 -Dexec.args="http://localhost:8080/ false" &
-
