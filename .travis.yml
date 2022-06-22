@@ -42,3 +42,4 @@ script:
   - mvn exec:java -pl joueur -Dserver.port=8084 -Dexec.args="http://localhost:8080/ false" &
   - mvn exec:java -pl joueur -Dserver.port=8085 -Dexec.args="http://localhost:8080/ false" &
   - mvn exec:java -pl joueur -Dserver.port=8086 -Dexec.args="http://localhost:8080/ false" &
+  
