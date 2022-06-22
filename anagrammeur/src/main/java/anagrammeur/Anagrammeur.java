@@ -61,6 +61,7 @@ public class Anagrammeur {
         }
         System.out.println("Lettres envoyés par un joueur : " + lettres);
         System.out.println("Listes de mots possible : " + motsPossibles);
+        
         return motsPossibles;
     }
 
