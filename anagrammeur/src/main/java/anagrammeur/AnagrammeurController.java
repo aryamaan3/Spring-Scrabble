@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 @RestController
@@ -16,11 +17,12 @@ public class AnagrammeurController {
     Anagrammeur anagrammeur;
 
     @GetMapping("/getMotPossible/{lettres}")
-    public PayloadAnagrammeur getMotPossible(@RequestParam(required = false) String val, @PathVariable("lettres") String lettres){
-        ArrayList<String> test = new ArrayList<>();
-        test.add("yakuzas");
+    public PayloadAnagrammeur getMotPossible(@RequestParam(required = false) String val, @PathVariable("lettres") String lettres) throws IOException {
+        //ArrayList<String> test = new ArrayList<>();
+        //test.add("yakuzas");
         //return new PayloadAnagrammeur(anagrammeur.getMotPossible(lettres)) ;
-        return new PayloadAnagrammeur(test) ;
+        ArrayList<String> resultats = anagrammeur.getMotPossible(lettres);
+        return new PayloadAnagrammeur(resultats) ;
 
     }
 }

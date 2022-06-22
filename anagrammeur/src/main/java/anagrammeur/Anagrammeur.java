@@ -11,13 +11,10 @@ import java.util.List;
 @Component
 public class Anagrammeur {
 
-    private final ArrayList<String> dictionnaire;
+    private ArrayList<String> dictionnaire = new ArrayList<String>();
     private Plateau plateau;
 
-    public Anagrammeur() throws IOException {
-        //Instanciation du dictionnaire de mots
-        dictionnaire = new ArrayList<String>();
-        initialiseDictionnaire();
+    public Anagrammeur() {
     }
 
     /**
@@ -50,8 +47,9 @@ public class Anagrammeur {
     /**
      * Recherche dans le dictionnaire les mots possibles
      */
-    public ArrayList<String> getMotPossible(String lettres){
+    public ArrayList<String> getMotPossible(String lettres) throws IOException {
         //Trouve les mots possible par rapport au lettres 1 er tour
+        this.initialiseDictionnaire();
         ArrayList<String> motsPossibles = new ArrayList<>();
         List<String> lettresSplit = new ArrayList<String>(Arrays.asList(lettres.split("")));
         for (String s : dictionnaire) {
