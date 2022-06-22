@@ -15,4 +15,9 @@ public class Pioche {
         return pioche.remove(r.nextInt((this.pioche.size()-1) + 1));
     }
 
+    void putBackInPioche(Character c)
+    {
+        pioche.add(c);
+    }
+
 }

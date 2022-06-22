@@ -13,7 +13,6 @@ public class AppariementController
     @PostMapping("freeJoueur")
     public Message freeJoueur(@RequestBody String url)
     {
-        System.out.println("player added");
         Message g = new Message("Player added");
         app.addJoueur(url);
         return g;
@@ -22,7 +21,6 @@ public class AppariementController
     @PostMapping("freePartie")
     public Message freePartie(@RequestBody String url)
     {
-        System.out.println("partie added");
         Message g = new Message("Partie added");
         app.addPartie(url);
         return g;
@@ -31,7 +29,6 @@ public class AppariementController
     @PostMapping("freeAnagrammeur")
     public Message freeAnagrammeur(@RequestBody String url)
     {
-        System.out.println("anagrammeur added");
         Message g = new Message("Anagrammeur added");
         app.addAnagrammeur(url);
         return g;

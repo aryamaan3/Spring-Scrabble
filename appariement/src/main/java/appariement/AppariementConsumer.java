@@ -19,7 +19,6 @@ public class AppariementConsumer
 
     void creerPartie(String partieUrl, PlayerDetails playerData)
     {
-        System.out.println("trying on : " + partieUrl);
         WebClient client = builder.baseUrl(partieUrl).build();
         client.post()
                 .uri("/initPartie")

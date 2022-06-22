@@ -13,6 +13,7 @@ public class Anagrammeur {
 
     private ArrayList<String> dictionnaire = new ArrayList<String>();
     private Plateau plateau;
+    private boolean dictInitialised = false;
 
     public Anagrammeur() {
     }
@@ -22,11 +23,15 @@ public class Anagrammeur {
      * et place son contenu dans l'ArrayList dictionnaire
      */
     private void initialiseDictionnaire() throws IOException {
-        String fileName = "anagrammeur/liste_francais.txt";
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                dictionnaire.add(line);
+        if (!dictInitialised)
+        {
+            String fileName = "anagrammeur/liste_francais.txt";
+            try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    dictionnaire.add(line);
+                }
+                dictInitialised = true;
             }
         }
     }
@@ -54,7 +59,7 @@ public class Anagrammeur {
         List<String> lettresSplit = new ArrayList<String>(Arrays.asList(lettres.split("")));
         for (String s : dictionnaire) {
             List<String> motSplit = new ArrayList<String>(Arrays.asList(s.split("")));
-            if ((motSplit.containsAll(lettresSplit)) && (motSplit.size() == lettresSplit.size())){
+            if ((lettresSplit.containsAll(motSplit))){
                 motsPossibles.add(s);
             }
         }

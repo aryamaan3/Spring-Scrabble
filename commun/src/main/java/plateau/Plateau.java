@@ -53,6 +53,21 @@ public class Plateau
         return this.plateau.get(y).get(x);
     }
 
+    public boolean isEmpty()
+    {
+        for (var aCol : this.plateau)
+        {
+            for (var aCase : aCol)
+            {
+                if (!aCase.isEmpty())
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     //TODO : @geoffreylalic à verifier si ça marche
     public ArrayList<Case> getPosedCase()
     {
@@ -87,14 +102,23 @@ public class Plateau
         return colonne;
     }
 
-    public int getNumberOfLettersPlacedOnColumn(int numCol)
+    private int countNbLetters(ArrayList<Case> lst)
     {
-        ArrayList<Case> colonne = getColonne(numCol);
         int nbLetters = 0;
-        for(Case lettre: colonne){
+        for(Case lettre: lst){
             if(!lettre.isEmpty()) nbLetters++;
         }
         return nbLetters;
+    }
+
+    public int getNumberOfLettersPlacedOnColumn(int numCol)
+    {
+        return countNbLetters(getColonne(numCol));
+    }
+
+    public int getNumberOfLettresPlacedOnLine(int nbLine)
+    {
+        return countNbLetters(getLigne(nbLine));
     }
 
     public void setCase(int x, int y, Character val)
@@ -111,7 +135,14 @@ public class Plateau
             output.append("|");
             for (Case aCase : aLine)
             {
-                output.append(aCase.getValeur());
+                if (aCase.getValeur() == Character.MIN_VALUE)
+                {
+                    output.append("_");
+                }
+                else
+                {
+                    output.append(aCase.getValeur());
+                }
                 output.append("|");
             }
             output.append("\n");

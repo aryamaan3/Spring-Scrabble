@@ -7,8 +7,9 @@ public class PiocheFactory {
     static List<Character> pioche = new ArrayList<>();
     
     static List<Character> creerPioche(){
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 15; i++) {
             pioche.add('a');
+            pioche.add('e');
         }
         for (int i = 0; i < 2; i++) {
             pioche.add('b');

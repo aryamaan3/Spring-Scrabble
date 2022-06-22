@@ -22,7 +22,7 @@ public class Partie
     Pioche pioche = new Pioche();
     Plateau board = new Plateau(PlateauFactory.creerPlateau());
     static final int kTailleMain = 7;
-    static final String kRepiocheMot = "imout";
+    static final String kRepiocheMot = "sososos";
 
     @Autowired
     PartieConsumer linker;
@@ -79,6 +79,8 @@ public class Partie
         if (Objects.equals(mot, kRepiocheMot))
         {
             //TODO : this means player wants to pick new letters
+            emptyMain(id);
+            return demandeJouer(id);
         }
         if (verifierMot(mot))
         {
@@ -184,16 +186,6 @@ public class Partie
     }
 
     /**
-     * Dans le cas où le joueurApplication.joueur trouve qu'il ne peut pas faire un mot
-     * il demande de changer sa main
-     * @param id du joueurApplication.joueur en question
-     */
-    void RepiocheLettres(int id)
-    {
-        //TODO
-    }
-
-    /**
      * Verifie si le mot choisi est dans le fichier liste_francais
      * @param mot choisi par le joueurApplication.joueur
      * @return vrai si le mot existe
@@ -216,6 +208,16 @@ public class Partie
                 this.main.get(id).add(pioche.piocher());
             }
         }
+    }
+
+    void emptyMain(int id)
+    {
+        var toPutBack = this.main.get(id);
+        for (int i = 0; i < kTailleMain; i++)
+        {
+            this.pioche.putBackInPioche(toPutBack.poll());
+        }
+        this.main.get(id).clear();
     }
 
     /**
@@ -250,6 +252,19 @@ public class Partie
         return this.joueurPoints.get(id);
     }
 
+    boolean isBoardFull()
+    {
+        for (int i = 0; i < 15; i++)
+        {
+            if (board.getNumberOfLettresPlacedOnLine(i) == 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     boolean isGameOn(ArrayList<Integer> joueurs, Map<Integer, Integer> joueurPoints)
     {
         for (int id : joueurs)
@@ -260,7 +275,7 @@ public class Partie
             }
         }
 
-        return true;
+        return !isBoardFull();
 
     }
 
@@ -330,6 +345,6 @@ public class Partie
             System.out.println(classement());
         }
         System.out.println("-----------------Fin----------------");
-        System.out.println("Le[s] gagnant[s] : " + getWinners(this.joueurPoints));
+        //System.out.println("Le[s] gagnant[s] : " + getWinners(this.joueurPoints));
     }
 }

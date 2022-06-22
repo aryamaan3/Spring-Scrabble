@@ -12,7 +12,8 @@ import java.util.Comparator;
 
 @Component
 public class Joueur {
-    boolean firstMove = true;
+    boolean didIRetry = false;
+    private static final int[] traverseRoute = {7, 8, 6, 5, 9, 4, 10, 3, 11, 2, 12, 1, 13, 0, 14};
 
     @Autowired
     JoueurConsumer linker;
@@ -82,15 +83,82 @@ public class Joueur {
         return null;
     }
 
+    private ArrayList<Placement> findHorizontalWord(ArrayList<String> listeMotsPossibles, Plateau plateau)
+    {
+        for (var i : traverseRoute)
+        {
+            if (plateau.getNumberOfLettersPlacedOnColumn(i) == 0)
+            {
+                String motChoisi = choisirMotPlusLong(listeMotsPossibles);
+                return placeOnAxeX(motChoisi, i, 3);
+            }
+        }
+        return null;
+    }
+
+    private ArrayList<Placement> placeOnFreeVerticals(ArrayList<String> listeMotsPossibles, Plateau plateau)
+    {
+        for (var i : traverseRoute)
+        {
+            if (plateau.getNumberOfLettresPlacedOnLine(i) == 0)
+            {
+                String motChoisi = choisirMotPlusLong(listeMotsPossibles);
+                return placeOnAxeY(motChoisi, 3, i);
+            }
+        }
+        return null;
+    }
+
+    private ArrayList<Placement> getRepiocheMot()
+    {
+        ArrayList<Placement> output = new ArrayList<>();
+        output.add(new Placement('s', 0, 0));
+        output.add(new Placement('o', 0, 0));
+        output.add(new Placement('s', 0, 0));
+        output.add(new Placement('o', 0, 0));
+        output.add(new Placement('s', 0, 0));
+        output.add(new Placement('o', 0, 0));
+        output.add(new Placement('s', 0, 0));
+
+        return output;
+    }
+
     public ArrayList<Placement> jouer (Plateau plateau, String main) {
         var urlAnagrammeur = linker.getFreeAnagrammeur();
         var listeMotsPossibles = linker.getMotPossible(main, urlAnagrammeur).getPayloadJoueur();
+        if (listeMotsPossibles.size() < 1)
+        {
+            if (didIRetry)
+            {
+                listeMotsPossibles.add("yakuzas");
+            }
+            else
+            {
+                didIRetry = true;
+                return getRepiocheMot();
+            }
+        }
         ArrayList<Placement> choix;
-        if(firstMove){
+        if(plateau.isEmpty()){
             choix = firstPlacement(listeMotsPossibles);
-            firstMove = false;
         }
         else choix = findVerticalWord(listeMotsPossibles,plateau);
+
+        if (choix == null)
+        {
+            choix = findHorizontalWord(listeMotsPossibles,plateau);
+        }
+
+        if (choix == null)
+        {
+            choix = placeOnFreeVerticals(listeMotsPossibles,plateau);
+        }
+
+        if (choix == null)
+        {
+            return getRepiocheMot();
+        }
+        didIRetry = false;
         return choix;
     }
 }
