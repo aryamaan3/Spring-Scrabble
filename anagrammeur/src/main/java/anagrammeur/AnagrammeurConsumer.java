@@ -36,7 +36,6 @@ public class AnagrammeurConsumer
     void subscribe(String urlApp, int port, boolean isDocker)
     {
         String url = isDocker ? myUrl : "localhost";
-        System.out.println("isDocker : " + isDocker + ", app : " + urlApp + ", mine :" + url + ":" + port);
         WebClient client = builder.baseUrl(urlApp).build();
         client.post()
                 .uri("freeAnagrammeur")

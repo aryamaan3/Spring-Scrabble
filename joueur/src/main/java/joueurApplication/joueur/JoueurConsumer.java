@@ -36,7 +36,6 @@ public class JoueurConsumer {
     {
         this.urlAppariement = urlAppariement;
         String url = isDocker ? myUrl : "localhost";
-        System.out.println("isDocker : " + isDocker + ", app : " + urlAppariement + ", mine :" + url + ":" + port);
         WebClient client = builder.baseUrl(urlAppariement).build();
         client.post()
                 .uri("/freeJoueur")

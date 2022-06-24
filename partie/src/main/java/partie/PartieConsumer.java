@@ -37,7 +37,6 @@ public class PartieConsumer
     void subscribe(String urlAppariement, int port, boolean isDocker)
     {
         String url = isDocker ? myUrl : "localhost";
-        System.out.println("isDocker : " + isDocker + ", app : " + urlAppariement + ", mine :" + url + ":" + port);
         WebClient client = builder.baseUrl(urlAppariement).build();
         client.post()
                 .uri("/freePartie")
@@ -51,7 +50,6 @@ public class PartieConsumer
 
     PayloadJoueur jouer(String url, PartieToJoueur messageToSend)
     {
-        System.out.println("partie trying on : " + url);
         WebClient client = builder.baseUrl(url).build();
         return client.post()
                 .uri("/jouer")
