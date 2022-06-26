@@ -7,26 +7,37 @@ import org.springframework.web.bind.annotation.*;
 import plateau.Placement;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class JoueurController {
     @Autowired
     Joueur joueur;
 
-    static ArrayList<Placement> getJoueurResponse(String main)
+    @PostMapping("/jouer")
+    public PayloadJoueur jouer(@RequestBody PartieToJoueur message)
     {
-        ArrayList<Placement> List = new ArrayList<>();
-        Placement center = new Placement(main.charAt(0), 6, 7);
-        List.add(center);
-        for (int i = 1; i < 3; i++) {
-            Placement c = new Placement(main.charAt(i), center.getX()+i, center.getY());
-            List.add(c);
-        }
-        return List;
+        return new PayloadJoueur(joueur.jouer(message.getBoard(), message.getMain()));
     }
 
-    @PostMapping("/jouer")
-    public PayloadJoueur jouer(@RequestBody PartieToJoueur message) {
-        return new PayloadJoueur(joueur.jouer(message.getBoard(), message.getMain()));
+    @GetMapping("/kill")
+    public void kill()
+    {
+        killMySelf();
+    }
+
+    void killMySelf()
+    {
+        Thread t = new Thread(() -> {
+            try {
+                TimeUnit.MILLISECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                System.exit(0);
+            }
+
+        });
+        t.start();
     }
 }

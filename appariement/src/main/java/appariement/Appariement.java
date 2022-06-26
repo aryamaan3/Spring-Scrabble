@@ -50,6 +50,8 @@ public class Appariement
         {
             var partie = partiesLibres.poll();
             app.creerPartie(partie, new PlayerDetails(joueursLibres));
+            app.killAll(partie, joueursLibres, anagrammeursLibres);
+            app.killMySelf();
         }
     }
 
