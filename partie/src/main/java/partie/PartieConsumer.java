@@ -48,7 +48,7 @@ public class PartieConsumer
                 .block();
     }
 
-    PayloadJoueur jouer(String url, PartieToJoueur messageToSend)
+    public PayloadJoueur jouer(String url, PartieToJoueur messageToSend)
     {
         WebClient client = builder.baseUrl(url).build();
         return client.post()

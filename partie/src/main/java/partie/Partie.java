@@ -30,7 +30,7 @@ public class Partie
     public Partie()
     {}
 
-    void setJoueurs(List<String> urls)
+    boolean setJoueurs(List<String> urls)
     {
         this.joueursUrls.clear();
         for (int i = 1; i < urls.size() + 1; i++)
@@ -38,7 +38,7 @@ public class Partie
             this.joueurs.add(i);
             this.joueursUrls.put(joueurs.get(i-1), urls.get(i-1));
         }
-        lancerPartie();
+        return lancerPartie();
     }
 
     void setJoueurs(PlayerDetails playerData)
@@ -252,17 +252,21 @@ public class Partie
         return this.joueurPoints.get(id);
     }
 
-    boolean isBoardFull()
+    boolean isBoardFull(ArrayList<Integer> joueurs)
     {
+        int nbLineFree = 0;
         for (int i = 0; i < 15; i++)
         {
             if (board.getNumberOfLettresPlacedOnLine(i) == 0)
             {
-                return false;
+                nbLineFree++;
+            }
+            if (board.getNumberOfLettersPlacedOnColumn(i) == 0)
+            {
+                nbLineFree++;
             }
         }
-
-        return true;
+        return nbLineFree < joueurs.size();
     }
 
     boolean isGameOn(ArrayList<Integer> joueurs, Map<Integer, Integer> joueurPoints)
@@ -275,7 +279,7 @@ public class Partie
             }
         }
 
-        return !isBoardFull();
+        return !isBoardFull(joueurs);
 
     }
 
@@ -316,7 +320,7 @@ public class Partie
     /**
      * Lance la PartieApplication.partie
      */
-    public void lancerPartie()
+    public boolean lancerPartie()
     {
         setupPartie();
         System.out.println("Le jeu commence");
@@ -346,5 +350,6 @@ public class Partie
         }
         System.out.println("-----------------Fin----------------");
         //System.out.println("Le[s] gagnant[s] : " + getWinners(this.joueurPoints));
+        return true;
     }
 }

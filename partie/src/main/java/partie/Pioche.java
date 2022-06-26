@@ -1,5 +1,7 @@
 package partie;
 
+import factory.PiocheFactory;
+
 import java.util.List;
 import java.util.Random;
 

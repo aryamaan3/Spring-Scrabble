@@ -13,6 +13,11 @@ public class PartieController
     @Autowired
     Partie partie;
 
+    public void setPartieLinker(PartieConsumer linker)
+    {
+        partie.linker = linker;
+    }
+
     @PostMapping("/initPartie")
     public Message initPartie(@RequestBody PlayerDetails playerData)
     {
