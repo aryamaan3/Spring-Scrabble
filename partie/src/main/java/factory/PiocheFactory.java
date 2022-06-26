@@ -1,4 +1,4 @@
-package partie;
+package factory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 public class PiocheFactory {
     static List<Character> pioche = new ArrayList<>();
     
-    static List<Character> creerPioche(){
+    public static List<Character> creerPioche(){
         for (int i = 0; i < 15; i++) {
             pioche.add('a');
             pioche.add('e');

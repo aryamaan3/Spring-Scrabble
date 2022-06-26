@@ -12,5 +12,7 @@ mvn exec:java -pl joueur -Dserver.port=8083 -Dexec.args="http://localhost:8080/ 
 mvn exec:java -pl joueur -Dserver.port=8084 -Dexec.args="http://localhost:8080/ false"
 mvn exec:java -pl joueur -Dserver.port=8085 -Dexec.args="http://localhost:8080/ false"
 mvn exec:java -pl joueur -Dserver.port=8086 -Dexec.args="http://localhost:8080/ false"
+cd partie
+mvn failsafe:integration-test -Dit.test=partieController.TestPartieControllerIT#initPartieTest
 ```
 

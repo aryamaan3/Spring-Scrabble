@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 
 import java.util.List;
 
+import factory.PiocheFactory;
 import org.junit.Test;
 
 public class TestPioche {

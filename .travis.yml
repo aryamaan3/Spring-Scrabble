@@ -14,32 +14,15 @@ install:
   - mvn clean install -Dskiptest
 
 script:
-  #- docker version
-  #- echo "nb joueurs = $NB_JOUEURS "
   - mvn test
-  #- docker build joueur -t scrabble:joueur
-  #- cd moteur
-  #- docker run -d --name joueur_test -e PORT="8081" -e LANCEMENT="POUR_LES_TEST" -p 8081:8081 scrabble:joueur
-  #- mvn failsafe:integration-test -Dit.test=prg.exemple.demoscrabble.MoteurWebControleurITCase#demanderAuJoueurDeJoueurTest
-  #- docker start joueur_test
-  #- mvn failsafe:integration-test -Dit.test=prg.exemple.demoscrabble.MoteurWebControleurITCase#demanderAuJoueurDeJoueurTest2foisDeSuite
-  #- mvn exec:java -Dexec.args="closingAtTheEnd" &
-  #- cd ../joueur
-  #- mvn exec:java
-  # construction des dockers
+  - cd partie
+  - mvn failsafe:integration-test -Dit.test=partieController.TestPartieControllerIT#initPartieTest
+  - cd ..
 
   - docker build anagrammeur -t scrabble:anagrammeur
   - docker build appariement -t scrabble:appariement
   - docker build partie -t scrabble:partie
   - docker build joueur -t scrabble:joueur
-  
-  - docker-compose up --scale joueur=4
 
-  #- mvn exec:java -pl appariement &
-  #- mvn exec:java -pl anagrammeur -Dserver.port=8081 -Dexec.args="http://localhost:8080/ false" &
-  #- mvn exec:java -pl partie -Dserver.port=8082 -Dexec.args="http://localhost:8080/ false" &
-  #- mvn exec:java -pl joueur -Dserver.port=8083 -Dexec.args="http://localhost:8080/ false" &
-  #- mvn exec:java -pl joueur -Dserver.port=8084 -Dexec.args="http://localhost:8080/ false" &
-  #- mvn exec:java -pl joueur -Dserver.port=8085 -Dexec.args="http://localhost:8080/ false" &
-  #- mvn exec:java -pl joueur -Dserver.port=8086 -Dexec.args="http://localhost:8080/ false" &
+  - docker-compose up --scale joueur=4
 
