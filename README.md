@@ -16,3 +16,6 @@ cd partie
 mvn failsafe:integration-test -Dit.test=partieController.TestPartieControllerIT#initPartieTest
 ```
 
+# Démonstration vidéo
+
+[Cliquer ici](https://youtu.be/vpywwS-k3Ss) ou url : https://youtu.be/vpywwS-k3Ss
