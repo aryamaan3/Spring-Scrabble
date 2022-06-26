@@ -78,7 +78,6 @@ public class Partie
         var mot = caseToString(motChoisie);
         if (Objects.equals(mot, kRepiocheMot))
         {
-            //TODO : this means player wants to pick new letters
             emptyMain(id);
             return demandeJouer(id);
         }
@@ -89,8 +88,6 @@ public class Partie
             joueurPoints.put(id, joueurPoints.get(id) + attribuerPoints(motChoisie));
             return mot;
         }
-        // Si verifieMot renvoie false refaire tous le process avec appelJoueur
-        //TODO : reinitialiser la main du joueur avant de recommencer
         return demandeJouer(id);
     }
 

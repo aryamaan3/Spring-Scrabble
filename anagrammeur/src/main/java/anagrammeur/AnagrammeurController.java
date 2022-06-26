@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class AnagrammeurController {
@@ -24,5 +25,26 @@ public class AnagrammeurController {
         ArrayList<String> resultats = anagrammeur.getMotPossible(lettres);
         return new PayloadAnagrammeur(resultats) ;
 
+    }
+
+    @GetMapping("/kill")
+    public void kill()
+    {
+        killMySelf();
+    }
+
+    void killMySelf()
+    {
+        Thread t = new Thread(() -> {
+            try {
+                TimeUnit.MILLISECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                System.exit(0);
+            }
+
+        });
+        t.start();
     }
 }

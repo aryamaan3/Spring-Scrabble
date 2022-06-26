@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class PartieController
@@ -25,9 +26,24 @@ public class PartieController
         return new Message("game completed with sucess");
     }
 
-    @GetMapping("/test")
-    public Message test()
+    @GetMapping("/kill")
+    public void kill()
     {
-        return new Message("test");
+        killMySelf();
+    }
+
+    void killMySelf()
+    {
+        Thread t = new Thread(() -> {
+            try {
+                TimeUnit.MILLISECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                System.exit(0);
+            }
+
+        });
+        t.start();
     }
 }
